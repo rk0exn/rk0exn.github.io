@@ -3,16 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="color-scheme" content="light dark">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>自己紹介</title>
     <meta name="robots" content="noindex, nofollow">
     <script src="https://www.google.com/recaptcha/api.js?render=6Ld6SVkrAAAAAP521A5aHf9P9OeTlrunOixKOlfj"></script>
-	<script>
+    <script>
     grecaptcha.ready(function() {
         grecaptcha.execute('6Ld6SVkrAAAAAP521A5aHf9P9OeTlrunOixKOlfj', {action: 'view'}).then(function(token) {
         });
     });
     </script>
     <style>
+        html, body {
+            width: 100vw;
+            /* 横スクロールバーを完全に消す（はみ出し防止） */
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
         :root {
             color-scheme: light dark;
             --bg: #f9f9f9;
@@ -39,22 +47,25 @@
             margin: 30px 0 0 0;
             min-height: 100vh;
             position: relative;
+            padding-bottom: 60px;
+            box-sizing: border-box;
         }
         .intro-container {
             background: var(--card-bg);
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-            max-width: 500px;
+            max-width: 340px;
             margin: 0 auto;
-            padding: 32px 24px;
+            padding: 20px 12px;
+            box-sizing: border-box;
         }
         h1 {
             color: var(--heading);
-            font-size: 2em;
+            font-size: 1.4em;
             margin-bottom: 0.4em;
         }
         .icon {
-            font-size: 3em;
+            font-size: 2em;
             margin-bottom: 0.4em;
         }
         ul {
@@ -72,6 +83,13 @@
             font-size: 0.95em;
             letter-spacing: 0.05em;
             z-index: 100;
+            box-sizing: border-box;
+        }
+        @media (max-width: 400px) {
+            .intro-container {
+                max-width: 96vw;
+                padding: 10px 2vw;
+            }
         }
     </style>
 </head>
