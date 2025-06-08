@@ -3,7 +3,10 @@ name: Build and Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # ←自動更新したいブランチ名
+      - main
+
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
@@ -11,8 +14,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      # 必要があればビルド、例えばnpm run build等
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
