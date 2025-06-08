@@ -5,26 +5,44 @@
 	<meta name="color-scheme" content="light dark">
     <title>自己紹介</title>
     <meta name="robots" content="noindex, nofollow">
-    <!-- Google reCAPTCHA v3 -->
     <script src="https://www.google.com/recaptcha/api.js?render=6Ld6SVkrAAAAAP521A5aHf9P9OeTlrunOixKOlfj"></script>
 	<script>
-    // サイト閲覧時にreCAPTCHA v3を実行（トークン取得のみ、サーバー送信はしない）
     grecaptcha.ready(function() {
         grecaptcha.execute('6Ld6SVkrAAAAAP521A5aHf9P9OeTlrunOixKOlfj', {action: 'view'}).then(function(token) {
-            // トークンはここで取得できるが、GitHub Pagesではサーバー送信できません
-            // console.log("reCAPTCHA token:", token);
         });
     });
     </script>
     <style>
+        :root {
+            color-scheme: light dark;
+            --bg: #f9f9f9;
+            --card-bg: #fff;
+            --text: #222;
+            --heading: #3178c6;
+            --footer-bg: #222;
+            --footer-text: #fff;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #161616;
+                --card-bg: #222;
+                --text: #f4f4f4;
+                --heading: #6ba6ff;
+                --footer-bg: #111;
+                --footer-text: #aaa;
+            }
+        }
         body {
+            background-color: var(--bg);
+            color: var(--text);
             font-family: 'メイリオ', Meiryo, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', Arial, sans-serif;
-            background-color: #f9f9f9;
-            margin: 30px;
-            color: #333;
+            margin: 30px 0 0 0;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 60px;
         }
         .intro-container {
-            background: #fff;
+            background: var(--card-bg);
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.07);
             max-width: 500px;
@@ -32,7 +50,7 @@
             padding: 32px 24px;
         }
         h1 {
-            color: #3178c6;
+            color: var(--heading);
             font-size: 2em;
             margin-bottom: 0.4em;
         }
@@ -42,6 +60,19 @@
         }
         ul {
             padding-left: 1.2em;
+        }
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100vw;
+            background: var(--footer-bg);
+            color: var(--footer-text);
+            text-align: center;
+            padding: 14px 0;
+            font-size: 0.95em;
+            letter-spacing: 0.05em;
+            z-index: 100;
         }
     </style>
 </head>
