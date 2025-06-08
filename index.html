@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>自己紹介</title>
+    <meta name="robots" content="noindex, nofollow">
+    <!-- Google reCAPTCHA v3 -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6Ld6SVkrAAAAAP521A5aHf9P9OeTlrunOixKOlfj"></script>
+	<script>
+    // サイト閲覧時にreCAPTCHA v3を実行（トークン取得のみ、サーバー送信はしない）
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6Ld6SVkrAAAAAP521A5aHf9P9OeTlrunOixKOlfj', {action: 'view'}).then(function(token) {
+            // トークンはここで取得できるが、GitHub Pagesではサーバー送信できません
+            // console.log("reCAPTCHA token:", token);
+        });
+    });
+    </script>
+    <style>
+        body {
+            font-family: 'メイリオ', Meiryo, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 30px;
+            color: #333;
+        }
+        .intro-container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+        h1 {
+            color: #3178c6;
+            font-size: 2em;
+            margin-bottom: 0.4em;
+        }
+        .icon {
+            font-size: 3em;
+            margin-bottom: 0.4em;
+        }
+        ul {
+            padding-left: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="intro-container">
+        <div class="icon">👋</div>
+        <h1>自己紹介</h1>
+        <p>はじめまして！</p>
+        <ul>
+            <li>名前：<strong>はぅ</strong></li>
+            <li>趣味：<strong>プログラミング(特にC#)</strong></li>
+            <li>好きなこと：<strong>電子機器を適当にいじること(たまに壊すけど)</strong></li>
+            <li>ひとこと：<strong>まあなんとでもなるっしょ(((殴</strong></li>
+        </ul>
+        <p>こんなカスですが、どうぞよろしくお願いします！</p>
+    </div>
+</body>
+</html>
