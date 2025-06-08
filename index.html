@@ -14,6 +14,9 @@
     });
     </script>
     <style>
+        .grecaptcha-badge {
+            visibility: visible;
+        }
         html, body {
             width: 100vw;
             overflow-y: hidden;
@@ -37,6 +40,9 @@
                 --heading: #6ba6ff;
                 --footer-bg: #111;
                 --footer-text: #aaa;
+            }
+            .g-recaptcha {
+                data-theme: "dark";
             }
         }
         body {
@@ -106,6 +112,7 @@
         </ul>
         <p>こんなカスですが、どうぞよろしくお願いします！</p>
     </div>
+    <div class="g-recaptcha" data-sitekey="6Ld6SVkrAAAAAP521A5aHf9P9OeTlrunOixKOlfj"></div>
 	<footer class="footer">
         Copyright &copy; 2025 rk0exn All rights reserved.
     </footer>
