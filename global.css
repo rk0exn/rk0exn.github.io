@@ -1,0 +1,78 @@
+@charset "UTF-8";
+html, body {
+    width: 100vw;
+    overflow-y: hidden;
+    margin: 0;
+    padding: 0;
+}
+:root {
+    color-scheme: light dark;
+	--bg: #f9f9f9;
+    --card-bg: #fff;
+    --text: #222;
+    --heading: #3178c6;
+    --footer-bg: #222;
+    --footer-text: #fff;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #161616;
+        --card-bg: #222;
+        --text: #f4f4f4;
+        --heading: #6ba6ff;
+        --footer-bg: #111;
+        --footer-text: #aaa;
+    }
+}
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'メイリオ', Meiryo, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', Arial, sans-serif;
+    margin: 30px 0 0 0;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 60px;
+    box-sizing: border-box;
+}
+.intro-container {
+    background: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    width: auto;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 12px;
+    box-sizing: border-box;
+}
+h1 {
+    color: var(--heading);
+    font-size: 1.4em;
+    margin-bottom: 0.4em;
+}
+.icon {
+    font-size: 2em;
+    margin-bottom: 0.4em;
+}
+ul {
+    padding-left: 1.2em;
+}
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    background: var(--footer-bg);
+    color: var(--footer-text);
+    text-align: center;
+    padding: 14px 0;
+    font-size: 0.95em;
+    letter-spacing: 0.05em;
+    z-index: 100;
+    box-sizing: border-box;
+}
+@media (max-width: 400px) {
+    .intro-container {
+    max-width: 96vw;
+    padding: 10px 2vw;
+	}
+}
