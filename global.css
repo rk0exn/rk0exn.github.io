@@ -49,6 +49,9 @@ h1 {
     font-size: 1.4em;
     margin-bottom: 0.4em;
 }
+.title {
+	margin-left: 0.7em;
+}
 .icon {
     font-size: 2em;
     margin-bottom: 0.4em;
