@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, max-image-preview:none, max-video-preview:0, noimageindex, unavailable-after:Thu, 24 Nov 2022 00:00:00 +0900">
+    <title>Clock</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #000;
+            color: #888;
+            font-family: monospace, sans-serif;
+            font-size: 2.5em;
+            user-select: none;
+        }
+
+        #clock {
+            font-family: monospace;
+            font-size: 20vw;
+            text-align: center;
+            line-height: 1;
+        }
+
+        button {
+            font-size: 1em;
+            background: #000;
+            color: #888;
+            border: 1px solid #888;
+            padding: 5px 10px;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        button:hover {
+            background: #222;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="clock"></div>
+    <button id="fullscreenBtn">Fullscreen</button>
+
+    <script>
+        const clockEl = document.getElementById("clock");
+        const fsBtn = document.getElementById("fullscreenBtn");
+
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+
+            let text = `${h}:${m}:${s}`;
+
+            clockEl.textContent = text;
+
+            const jitter = Math.floor(Math.random() * 61) - 30;
+            setTimeout(updateClock, 127 + jitter);
+        }
+
+        fsBtn.addEventListener("click", () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            }
+            else {
+                document.exitFullscreen();
+            }
+        });
+
+        document.addEventListener("fullscreenchange", () => {
+            if (document.fullscreenElement) {
+                fsBtn.textContent = "Exit Fullscreen";
+            }
+            else {
+                fsBtn.textContent = "Fullscreen";
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const scope = document.querySelector("body");
+            scope.addEventListener("contextmenu", (event) => {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+            });
+        });
+
+        document.addEventListener("mousedown", e => {
+            if (e.button === 2) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                return false;
+            }
+        }, true);
+
+        updateClock();
+    </script>
+</body>
+
+</html>
