@@ -68,7 +68,7 @@ function hslToRgb(h, s, l) {
 
 function fileToSeed(file, callback) {
   const reader = new FileReader();
-  reader.onload = e => {
+  reader.onload = async e => {
     const text = e.target.result;
     const hash = await sha512Seed(text);
 
