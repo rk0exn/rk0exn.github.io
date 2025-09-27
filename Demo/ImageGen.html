@@ -13,7 +13,7 @@
   <h1>ノイズグラデーション生成</h1>
   <input type="file" id="fileInput">
   <canvas id="canvas" width="2000" height="2000"></canvas>
-  <a id="downloadLink" class="download" style="display:none;" download="noise_gradient.png">生成画像を保存</a>
+  <a id="downloadLink" class="download" style="display:block;" download="noise_gradient.png" href="#">画像が生成されていません</a>
 
 <script>
 const canvas = document.getElementById("canvas");
@@ -142,7 +142,7 @@ function generateImage({ rng, angle, gradientType, color1, color2 }) {
   canvas.toBlob(blob => {
     const url = URL.createObjectURL(blob);
     downloadLink.href = url;
-    downloadLink.style.display = "block";
+    downloadLink.textContent = "生成画像を保存";
   }, "image/png");
 }
 
