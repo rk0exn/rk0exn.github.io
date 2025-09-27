@@ -29,13 +29,12 @@
     font-weight: bold;
     visibility: hidden;
   }
-  #fileInput { color-scheme: light; }
 </style>
 </head>
 <body>
   <h1>ノイズグラデーション生成</h1>
   <p>このアプリは完全にクライアントで処理される画像生成アプリです。</p>
-  <input type="file" id="fileInput">
+  <input type="file" id="fileInput" color-scheme="light">
   <div class="canvas-wrapper">
     <canvas id="canvas" width="2000" height="2000" oncontextmenu="return false"></canvas>
     <div id="overlay">生成中です...</div>
