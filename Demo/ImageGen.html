@@ -9,11 +9,6 @@
 <title>ノイズグラデーション生成</title>
 <style>
   body { text-align: center; font-family: sans-serif; }
-  .canvas-wrapper {
-    position: relative;
-    display: inline-block;
-    margin-top: 1rem;
-  }
   canvas { margin-top: 1rem; border: 1px solid #555; max-width: 70vw; max-height: 70vh; width: auto; height: auto; display: block; margin-left: auto; margin-right: auto; }
   a.download { display: block; margin-top: 1rem; color: #08f; }
   #overlay {
@@ -29,18 +24,18 @@
     font-weight: bold;
     visibility: hidden;
   }
+  #fileInput { color-scheme: light; }
 </style>
 </head>
 <body>
   <h1>ノイズグラデーション生成</h1>
   <p>このアプリは完全にクライアントで処理される画像生成アプリです。</p>
-  <input type="file" id="fileInput" color-scheme="light">
-  <div class="canvas-wrapper">
+  <input type="file" id="fileInput">
+  <div>
     <canvas id="canvas" width="2000" height="2000" oncontextmenu="return false"></canvas>
     <div id="overlay">生成中です...</div>
   </div>
   <a id="downloadLink" class="download" style="display:block;" href="javascript:void(0)">画像が生成されていません</a>
-
 <script>
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
