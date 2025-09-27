@@ -31,12 +31,31 @@ function makeRng(seed) {
   };
 }
 
-function simpleHash(str) {
-  let h = 0;
-  for (let i = 0; i < str.length; i++) {
-    h = (h * 31 + str.charCodeAt(i)) | 0;
+>
+// シード付き乱数
+function makeRng(seed) {
+  let x = seed | 0;
+  return () => {
+    x ^= x << 13;
+    x ^= x >>> 17;
+    x ^= x << 5;
+    return (x >>> 0) / 0xFFFFFFFF;
+  };
+}
+
+// SHA-512を計算してseed化
+async function sha512Seed(text) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+  const hashBuffer = await crypto.subtle.digest("SHA-512", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+
+  // 512bit → 32bit整数に圧縮（XOR）
+  let seed = 0;
+  for (let i = 0; i < hashArray.length; i++) {
+    seed ^= (hashArray[i] << (i % 24)); // 24bitシフトで分散
   }
-  return h >>> 0;
+  return seed >>> 0; // 正の32bit整数
 }
 
 function hslToRgb(h, s, l) {
@@ -51,7 +70,7 @@ function fileToSeed(file, callback) {
   const reader = new FileReader();
   reader.onload = e => {
     const text = e.target.result;
-    const hash = simpleHash(text);
+    const hash = await sha512Seed(text);
 
     // 各要素を決定
     const rng = makeRng(hash);
