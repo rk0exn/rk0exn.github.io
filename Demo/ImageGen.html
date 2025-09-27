@@ -4,27 +4,46 @@
 <meta charset="UTF-8">
 <meta name="color-scheme" content="dark">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, max-image-preview:none, max-video-preview:0, noimageindex, unavailable-after:Thu, 24 Nov 2022 00:00:00 +0900">
 <title>ノイズグラデーション生成</title>
 <style>
-  body { background: #111; color: #eee; text-align: center; font-family: sans-serif; }
+  body { text-align: center; font-family: sans-serif; }
   canvas { margin-top: 1rem; border: 1px solid #555; max-width: 70vw; max-height: 70vh; width: auto; height: auto; display: block; margin-left: auto; margin-right: auto; }
-  a.download { display: block; margin-top: 1rem; color: #0af; }
+  a.download { display: block; margin-top: 1rem; color: #08f; }
+  input { background: #181818; color: #FFF }
+  input:hover { background: #333; }
+  #overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    visibility: hidden;
+  }
 </style>
 </head>
 <body>
   <h1>ノイズグラデーション生成</h1>
+  <p>このアプリは完全にクライアントで処理される画像生成アプリです。</p>
   <input type="file" id="fileInput">
-  <canvas id="canvas" width="2000" height="2000" oncontextmenu="return false"></canvas>
+  <div class="canvas-wrapper">
+    <canvas id="canvas" width="2000" height="2000" oncontextmenu="return false"></canvas>
+    <div id="overlay">生成中です...</div>
+  </div>
   <a id="downloadLink" class="download" style="display:block;" href="javascript:void(0)">画像が生成されていません</a>
 
 <script>
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const downloadLink = document.getElementById("downloadLink");
+const overlay = document.getElementById("overlay");
 
-// シード付き乱数生成器
 function makeRng(seed) {
   let x = seed | 0;
   return () => {
@@ -35,7 +54,6 @@ function makeRng(seed) {
   };
 }
 
-// シード付き乱数
 function makeRng(seed) {
   let x = seed | 0;
   return () => {
@@ -46,19 +64,17 @@ function makeRng(seed) {
   };
 }
 
-// SHA-512を計算してseed化
 async function sha512Seed(text) {
   const encoder = new TextEncoder();
   const data = encoder.encode(text);
   const hashBuffer = await crypto.subtle.digest("SHA-512", data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
 
-  // 512bit → 32bit整数に圧縮（XOR）
   let seed = 0;
   for (let i = 0; i < hashArray.length; i++) {
-    seed ^= (hashArray[i] << (i % 24)); // 24bitシフトで分散
+    seed ^= (hashArray[i] << (i % 24));
   }
-  return seed >>> 0; // 正の32bit整数
+  return seed >>> 0;
 }
 
 function hslToRgb(h, s, l) {
@@ -74,23 +90,17 @@ function fileToSeed(file, callback) {
   reader.onload = async e => {
     const text = e.target.result;
     const hash = await sha512Seed(text);
-
-    // 各要素を決定
     const rng = makeRng(hash);
-    const angle = Math.floor(rng() * 360);  // 角度
+    const angle = Math.floor(rng() * 360);
     const gradientType = rng() > 0.5 ? "linear" : "radial";
-
-    // 色決定 (HSLで2色を生成)
     const hue1 = Math.floor(rng() * 360);
     const hue2 = Math.floor(rng() * 360);
     const sat1 = 50 + rng() * 50;
     const sat2 = 50 + rng() * 50;
     const light1 = 40 + rng() * 20;
     const light2 = 40 + rng() * 20;
-
     const color1 = hslToRgb(hue1, sat1, light1);
     const color2 = hslToRgb(hue2, sat2, light2);
-
     callback({ rng, angle, gradientType, color1, color2 });
   };
   reader.readAsText(file);
@@ -99,39 +109,28 @@ function fileToSeed(file, callback) {
 function generateImage({ rng, angle, gradientType, color1, color2 }) {
   const imageData = ctx.createImageData(canvas.width, canvas.height);
   const data = imageData.data;
-
-  // 角度をラジアンに
   const rad = angle * Math.PI / 180;
   const cx = canvas.width / 2;
   const cy = canvas.height / 2;
-
   for (let y = 0; y < canvas.height; y++) {
     for (let x = 0; x < canvas.width; x++) {
       const i = (y * canvas.width + x) * 4;
-
       let t;
       if (gradientType === "linear") {
-        // 線形グラデーション: 点(x,y)の投影を計算
         const dx = x - cx;
         const dy = y - cy;
         const proj = dx * Math.cos(rad) + dy * Math.sin(rad);
         t = (proj / (canvas.width/2)) * 0.5 + 0.5; 
       } else {
-        // 円形グラデーション: 中心からの距離
         const dx = x - cx;
         const dy = y - cy;
         const dist = Math.sqrt(dx*dx + dy*dy);
         t = dist / (Math.sqrt(cx*cx + cy*cy));
       }
-
       t = Math.max(0, Math.min(1, t));
-
-      // 補間 (color1→color2)
       const r = Math.floor(color1[0] * (1 - t) + color2[0] * t);
       const g = Math.floor(color1[1] * (1 - t) + color2[1] * t);
       const b = Math.floor(color1[2] * (1 - t) + color2[2] * t);
-
-      // ノイズを少し混ぜる
       const noise = (rng() - 0.5) * 60;
       data[i]   = Math.max(0, Math.min(255, r + noise));
       data[i+1] = Math.max(0, Math.min(255, g + noise));
@@ -139,22 +138,19 @@ function generateImage({ rng, angle, gradientType, color1, color2 }) {
       data[i+3] = 255;
     }
   }
-
   ctx.putImageData(imageData, 0, 0);
-
-  // PNGとして保存リンクを生成
   canvas.toBlob(blob => {
     const url = URL.createObjectURL(blob);
     downloadLink.href = url;
     downloadLink.download = "noise_gradient.png";
-    downloadLink.textContent = "生成画像を保存";
+    downloadLink.textContent = "生成した画像を保存";
+    overlay.style.visibility = "hidden";
   }, "image/png");
 }
-
 document.getElementById("fileInput").addEventListener("change", e => {
   const file = e.target.files[0];
   if (!file) return;
-
+  overlay.style.visibility = "visible";
   fileToSeed(file, params => {
     generateImage(params);
   });
