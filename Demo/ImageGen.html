@@ -40,7 +40,8 @@ function fileToSeed(file, callback) {
     for (let i = 0; i < text.length; i++) {
       hash = (hash * 31 + text.charCodeAt(i)) | 0;
     }
-    callback(Math.abs(hash));
+    const mixedSeed = Math.abs(hash ^ Date.now() ^ Math.floor(Math.random() * 1e9));
+    callback(mixedSeed);
   };
   reader.readAsText(file);
 }
