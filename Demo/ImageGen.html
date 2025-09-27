@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ノイズグラデーション生成</title>
+<style>
+  body { background: #111; color: #eee; text-align: center; font-family: sans-serif; }
+  canvas { margin-top: 1rem; border: 1px solid #555; }
+  a.download { display: block; margin-top: 1rem; color: #0af; }
+</style>
+</head>
+<body>
+  <h1>ノイズグラデーション生成</h1>
+  <input type="file" id="fileInput">
+  <canvas id="canvas" width="2000" height="2000"></canvas>
+  <a id="downloadLink" class="download" style="display:none;" download="noise_gradient.png">生成画像を保存</a>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const downloadLink = document.getElementById("downloadLink");
+
+// シード付き乱数生成器
+function makeRng(seed) {
+  let x = seed | 0;
+  return () => {
+    x ^= x << 13;
+    x ^= x >>> 17;
+    x ^= x << 5;
+    return (x >>> 0) / 0xFFFFFFFF;
+  };
+}
+
+// ファイル内容に基づいてシードを決定
+function fileToSeed(file, callback) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    let text = e.target.result;
+    let hash = 0;
+    for (let i = 0; i < text.length; i++) {
+      hash = (hash * 31 + text.charCodeAt(i)) | 0;
+    }
+    callback(Math.abs(hash));
+  };
+  reader.readAsText(file);
+}
+
+// 画像生成 → Blob化 → ダウンロードリンク生成
+function generateAndExport(rng) {
+  const imageData = ctx.createImageData(canvas.width, canvas.height);
+  const data = imageData.data;
+
+  for (let y = 0; y < canvas.height; y++) {
+    for (let x = 0; x < canvas.width; x++) {
+      const i = (y * canvas.width + x) * 4;
+      const noise = rng();
+      const gradient = y / canvas.height;
+      const val = Math.floor(255 * (gradient * 0.7 + noise * 0.3));
+
+      data[i]   = val;       // R
+      data[i+1] = val;       // G
+      data[i+2] = 255 - val; // B
+      data[i+3] = 255;       // A
+    }
+  }
+
+  ctx.putImageData(imageData, 0, 0);
+
+  // 生成完了後 → Blob化
+  canvas.toBlob(blob => {
+    const url = URL.createObjectURL(blob);
+    downloadLink.href = url;
+    downloadLink.style.display = "block";
+  }, "image/png");
+}
+
+document.getElementById("fileInput").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  fileToSeed(file, seed => {
+    const rng = makeRng(seed);
+    generateAndExport(rng);
+  });
+});
+</script>
+</body>
+</html>
