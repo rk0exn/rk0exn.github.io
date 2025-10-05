@@ -8,6 +8,31 @@
     <title>自己紹介</title>
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, max-image-preview:none, max-video-preview:0, noimageindex, unavailable-after:Thu, 24 Nov 2022 00:00:00 +0900">
     <link rel="stylesheet" href="./global.css">
+    <style>
+        .profile-links-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .profile-link {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 8px;
+            background-color: var(--bg2);
+            border: 1px solid var(--heading);
+            transition: all 0.2s ease-in-out;
+            border-radius: 8px;
+            padding: 8px;
+        }
+        .profile-link img {
+            width: 32px;
+            height: 32px;
+        }
+        .profile-link:hover {
+            background-color: var(--bg);
+        }
+    </style>
     <h1 class="title">自己紹介</h1>
 </head>
 <body>
@@ -16,7 +41,7 @@
         <h1>自己紹介</h1>
         <p>はじめまして！</p>
         <ul>
-            <li>名前：<strong>はぅ</strong></li>
+            <li>名前：<strong>n0xa</strong></li>
             <li>趣味：<strong>プログラミング(特にC#)</strong></li>
             <li>好きなこと：<strong>電子機器を適当にいじること(たまに壊すけど)</strong></li>
             <li>よく分からん一言：<strong>まあなんとでもなるっしょ(((殴</strong></li>
@@ -24,6 +49,14 @@
         <p>こんなカスですが、どうぞよろしくお願いします！</p>
         <a href="https://rk0exn.github.io/sitetree" target="_self">サイトツリー</a>
         <a href="https://github.com/rk0exn" target="_blank">GitHub</a>
+        <br>
+        <h2>相互リンク一覧</h2>
+        <div class="profile-links-container">
+            <a href="https://profile.activetk.jp" target="_blank" class="profile-link">
+                <img src="https://www.activetk.jp/icon/index_150_150.ico"><span>ActiveTK</span>
+            </a>
+        </div>
+        <p>相互リンクは随時追加予定です...</p>
     </div>
     <footer class="footer">
         Copyright (c) 2025 rk0exn All rights reserved.
