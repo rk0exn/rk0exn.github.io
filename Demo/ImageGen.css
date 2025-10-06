@@ -25,8 +25,13 @@
 
 body {
     background: linear-gradient(0.125turn, var(--bg), var(--bg2), var(--heading));
+    width: 100vw;
+    min-height: 100vh;
+    overflow-y: hidden;
+    margin: 0;
+    padding: 0;
     text-align: center;
-    font-family: sans-serif;
+    font-family: 'メイリオ', Meiryo, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', Arial, sans-serif;
 }
 
 canvas {
