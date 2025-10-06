@@ -12,6 +12,7 @@ body {
     color-scheme: light dark;
     --bg: #f9f9f9;
     --bg2: #ccc;
+    --bg2-rev: #333;
     --card-bg: #fff;
     --text: #222;
     --heading: #3178c6;
@@ -23,6 +24,7 @@ body {
     :root {
         --bg: #161616;
         --bg2: #333;
+        --bg2-rev: #ccc;
         --card-bg: #222;
         --text: #f4f4f4;
         --heading: #6ba6ff;
@@ -49,8 +51,8 @@ body {
     border-style: solid;
     border-left-color: var(--heading);
     border-bottom-color: var(--heading);
-    border-top-color: var(--bg2);
-    border-right-color: var(--bg);
+    border-top-color: var(--bg2-rev);
+    border-right-color: var(--bg2-rev);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
     width: auto;
     max-width: 80vw;
