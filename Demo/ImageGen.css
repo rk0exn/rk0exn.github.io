@@ -1,13 +1,37 @@
 @charset "UTF-8";
 
+:root {
+    color-scheme: light dark;
+    --bg: #f9f9f9;
+    --bg2: #ccc;
+    --card-bg: #fff;
+    --text: #222;
+    --heading: #3178c6;
+    --footer-bg: #222;
+    --footer-text: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #161616;
+        --bg2: #333;
+        --card-bg: #222;
+        --text: #f4f4f4;
+        --heading: #6ba6ff;
+        --footer-bg: #111;
+        --footer-text: #aaa;
+    }
+}
+
 body {
+    background: linear-gradient(0.125turn, var(--bg), var(--bg2), var(--heading));
     text-align: center;
     font-family: sans-serif;
 }
 
 canvas {
     margin-top: 1rem;
-    border: 1px solid #555;
+    border: 1px solid var(--bg2);
     max-width: 70vw;
     max-height: 70vh;
     width: auto;
@@ -20,7 +44,7 @@ canvas {
 a.download {
     display: block;
     margin-top: 1rem;
-    color: #08f;
+    color: var(--heading);
 }
 
 #overlay {
@@ -33,7 +57,7 @@ a.download {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: var(--text);
     font-size: 1.5rem;
     font-weight: bold;
     visibility: hidden;
