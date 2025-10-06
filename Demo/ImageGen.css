@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
 :root {
-    transition: all 0.2s ease-in-out;
     color-scheme: light dark;
     --bg: #f9f9f9;
     --bg2: #ccc;
@@ -25,6 +24,7 @@
 }
 
 body {
+    transition: background 0.2s ease-in-out;
     background: linear-gradient(0.125turn, var(--bg), var(--bg2), var(--heading));
     width: 100vw;
     min-height: 100vh;
@@ -36,6 +36,7 @@ body {
 }
 
 canvas {
+    transition: border 0.2s ease-in-out;
     margin-top: 1rem;
     border: 1px solid var(--bg2);
     max-width: 70vw;
@@ -48,12 +49,14 @@ canvas {
 }
 
 a.download {
+    transition: color 0.2s ease-in-out;
     display: block;
     margin-top: 1rem;
     color: var(--heading);
 }
 
 #overlay {
+    transition: color 0.2s ease-in-out;
     position: absolute;
     top: 0;
     left: 0;

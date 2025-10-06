@@ -1,9 +1,5 @@
 @charset "UTF-8";
 
-:root {
-    transition: all 0.2s ease-in-out;
-}
-
 .profile-links-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
