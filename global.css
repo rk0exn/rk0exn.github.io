@@ -7,13 +7,13 @@ html, body {
 }
 :root {
     color-scheme: light dark;
-	--bg: #f9f9f9;
-    --bg2: #ccc;
-    --card-bg: #fff;
-    --text: #222;
-    --heading: #3178c6;
-    --footer-bg: #222;
-    --footer-text: #fff;
+	    --bg: #f9f9f9;
+        --bg2: #ccc;
+        --card-bg: #fff;
+        --text: #222;
+        --heading: #3178c6;
+        --footer-bg: #222;
+        --footer-text: #fff;
 }
 @media (prefers-color-scheme: dark) {
     :root {
@@ -82,7 +82,7 @@ ul {
 }
 @media (max-width: 400px) {
     .intro-container {
-    max-width: 96vw;
-    padding: 10px 2vw;
+        max-width: 96vw;
+        padding: 10px 2vw;
 	}
 }
