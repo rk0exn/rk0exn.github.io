@@ -23,6 +23,10 @@
     height: 32px;
 }
 
+.link-icon {
+    border-radius: 16px;
+}
+
 .profile-link:hover {
     background-color: var(--bg);
 }
