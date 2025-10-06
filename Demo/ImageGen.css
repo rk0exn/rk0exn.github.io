@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
 :root {
+    transition: all 0.2s ease-in-out;
     color-scheme: light dark;
     --bg: #f9f9f9;
     --bg2: #ccc;
