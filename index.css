@@ -27,6 +27,14 @@ img {
     border-radius: 16px;
 }
 
+img:not([src]),
+img[src=""],
+img[src="null"],
+img[src="undefined"] {
+  border: 1px solid #fff;
+  background-color: #000;
+}
+
 .profile-link:hover {
     background-color: var(--bg);
 }
