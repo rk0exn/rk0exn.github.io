@@ -34,7 +34,8 @@ body {
 }
 
 body {
-    transition: all 0.2s ease-in-out;
+    user-select: none;
+    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
     background: linear-gradient(0.125turn, var(--bg), var(--bg2), var(--heading));
     color: var(--text);
     font-family: 'メイリオ', Meiryo, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', Arial, sans-serif;
@@ -46,7 +47,13 @@ body {
 }
 
 .intro-container {
-    transition: all 0.2s ease-in-out;
+    transition:
+        background 0.2s ease-in-out,
+        border-left-color 0.2s ease-in-out,
+        border-bottom-color 0.2s ease-in-out,
+        border-top-color 0.2s ease-in-out,
+        border-right-color 0.2s ease-in-out;
+    
     background: var(--card-bg);
     border-radius: 8px;
     border-width: 3px;
@@ -91,7 +98,7 @@ ul {
 }
 
 .footer {
-    transition: all 0.2s ease-in-out;
+    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
     position: fixed;
     left: 0;
     bottom: 0;
