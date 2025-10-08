@@ -2,8 +2,9 @@
 
 html,
 body {
-    width: 100vw;
-    overflow-y: hidden;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
     margin: 0;
     padding: 0;
 }
