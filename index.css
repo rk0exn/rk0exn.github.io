@@ -23,6 +23,11 @@
     height: 32px;
 }
 
+.icon {
+    font-size: 2em;
+    margin-bottom: 0.4em;
+}
+
 img {
     border-radius: 16px;
 }

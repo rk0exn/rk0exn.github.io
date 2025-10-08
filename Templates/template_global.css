@@ -16,7 +16,7 @@ body {
     --bg2-rev: #333;
     --card-bg: #fff;
     --text: #222;
-    --heading: #3178c6;
+    --heading: #F00;
     --footer-bg: #222;
     --footer-text: #fff;
 }
@@ -28,7 +28,7 @@ body {
         --bg2-rev: #ccc;
         --card-bg: #222;
         --text: #f4f4f4;
-        --heading: #6ba6ff;
+        --heading: #F33;
         --footer-bg: #111;
         --footer-text: #aaa;
     }
@@ -99,7 +99,7 @@ ul {
     left: 0;
     bottom: 0;
     width: 100vw;
-    background: linear-gradient(0.25turn, var(--footer-bg), #9049FF, #08F);
+    background: linear-gradient(0.25turn, var(--footer-bg), #9049FF, #F00);
     color: var(--footer-text);
     text-align: center;
     padding: 14px 0;
