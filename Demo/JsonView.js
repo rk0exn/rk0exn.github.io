@@ -199,6 +199,10 @@ class JSONTreeViewer {
             if (!icon.classList.contains('leaf')) {
                 icon.classList.remove('collapsed');
                 icon.classList.add('expanded');
+                const materialIcon = icon.querySelector('.material-icons');
+                if (materialIcon) {
+                    materialIcon.textContent = 'expand_more';
+                }
             }
         });
     }
@@ -212,6 +216,10 @@ class JSONTreeViewer {
             if (!icon.classList.contains('leaf')) {
                 icon.classList.remove('expanded');
                 icon.classList.add('collapsed');
+                const materialIcon = icon.querySelector('.material-icons');
+                if (materialIcon) {
+                    materialIcon.textContent = 'chevron_right';
+                }
             }
         });
     }
