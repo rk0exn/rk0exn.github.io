@@ -7,14 +7,14 @@ export class TreeRenderer {
 
     render(container, data, rootKey = 'root') {
         container.innerHTML = '';
-        const rootNode = this.createTreeNode(rootKey, data, true);
+        const rootNode = this.createTreeNode(rootKey, data, true, false);
         container.appendChild(rootNode);
     }
 
-    createTreeNode(key, value, isRoot = false) {
+    createTreeNode(key, value, isRoot = false, initialExpanded = false) {
         const type = this.parser.getType(value);
         const isExpandable = this.parser.isExpandable(value);
-
+        
         const nodeWrapper = document.createElement('div');
         nodeWrapper.className = 'tree-node';
 
@@ -22,8 +22,8 @@ export class TreeRenderer {
         itemDiv.className = 'tree-item';
 
         const toggleIcon = document.createElement('span');
-        toggleIcon.className = isExpandable ? 'toggle-icon expanded' : 'toggle-icon leaf';
-
+        toggleIcon.className = isExpandable ? `toggle-icon ${initialExpanded ? 'expanded' : 'collapsed'}` : 'toggle-icon leaf';
+        
         if (isExpandable) {
             const icon = document.createElement('span');
             icon.className = 'material-icons';
@@ -48,16 +48,16 @@ export class TreeRenderer {
             const bracket = document.createElement('span');
             bracket.className = 'bracket';
             bracket.textContent = Array.isArray(value) ? '[' : '{';
-
+            
             const typeInfo = document.createElement('span');
             typeInfo.className = 'type-indicator';
             typeInfo.textContent = `${itemCount} items`;
-
+            
             itemDiv.appendChild(bracket);
             itemDiv.appendChild(typeInfo);
 
             const childrenDiv = document.createElement('div');
-            childrenDiv.className = 'children expanded';
+            childrenDiv.className = `children ${initialExpanded ? 'expanded' : ''}`;
 
             if (Array.isArray(value)) {
                 value.forEach((item, index) => {
@@ -92,7 +92,7 @@ export class TreeRenderer {
             const valueSpan = document.createElement('span');
             valueSpan.className = `value ${type}`;
             valueSpan.textContent = this.formatValue(value, type);
-
+            
             itemDiv.appendChild(valueSpan);
             nodeWrapper.appendChild(itemDiv);
         }
@@ -102,7 +102,7 @@ export class TreeRenderer {
 
     toggleNode(toggleIcon, childrenDiv) {
         const isExpanded = childrenDiv.classList.contains('expanded');
-
+        
         if (isExpanded) {
             childrenDiv.classList.remove('expanded');
             toggleIcon.classList.remove('expanded');

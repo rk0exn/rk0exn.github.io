@@ -17,9 +17,9 @@
     --text-secondary: rgba(0, 0, 0, 0.60);
     --text-disabled: rgba(0, 0, 0, 0.38);
     --divider: rgba(0, 0, 0, 0.12);
-    --shadow-1: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --shadow-2: 0 4px 8px rgba(0, 0, 0, 0.12);
-    --shadow-3: 0 8px 16px rgba(0, 0, 0, 0.14);
+    --shadow-1: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-2: 0 4px 8px rgba(0,0,0,0.12);
+    --shadow-3: 0 8px 16px rgba(0,0,0,0.14);
     --tree-bg: #f5f5f5;
     --hover-bg: rgba(0, 0, 0, 0.04);
     --value-default: #2e7d32;
@@ -45,9 +45,9 @@
         --text-secondary: rgba(255, 255, 255, 0.60);
         --text-disabled: rgba(255, 255, 255, 0.38);
         --divider: rgba(255, 255, 255, 0.12);
-        --shadow-1: 0 2px 4px rgba(0, 0, 0, 0.3);
-        --shadow-2: 0 4px 8px rgba(0, 0, 0, 0.4);
-        --shadow-3: 0 8px 16px rgba(0, 0, 0, 0.5);
+        --shadow-1: 0 2px 4px rgba(0,0,0,0.3);
+        --shadow-2: 0 4px 8px rgba(0,0,0,0.4);
+        --shadow-3: 0 8px 16px rgba(0,0,0,0.5);
         --tree-bg: #2a2a2a;
         --hover-bg: rgba(255, 255, 255, 0.08);
         --value-default: #81c784;
@@ -187,7 +187,6 @@ h2 {
         opacity: 0;
         transform: translateY(-8px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -245,10 +244,10 @@ h2 {
     transition: all var(--transition-fast);
 }
 
-.input-field input:focus+label,
-.input-field input:not(:placeholder-shown)+label,
-.input-field textarea:focus+label,
-.input-field textarea:not(:placeholder-shown)+label {
+.input-field input:focus + label,
+.input-field input:not(:placeholder-shown) + label,
+.input-field textarea:focus + label,
+.input-field textarea:not(:placeholder-shown) + label {
     top: 4px;
     font-size: 12px;
     color: var(--primary);
@@ -558,11 +557,9 @@ h2 {
     0% {
         transform: translateX(-100%) scaleX(0.5);
     }
-
     50% {
         transform: translateX(0%) scaleX(0.8);
     }
-
     100% {
         transform: translateX(100%) scaleX(0.5);
     }
@@ -601,15 +598,15 @@ h2 {
     main.container {
         padding: 0 16px;
     }
-
+    
     .card-content {
         padding: 16px;
     }
-
+    
     .action-buttons {
         flex-direction: column;
     }
-
+    
     .btn {
         width: 100%;
         justify-content: center;
