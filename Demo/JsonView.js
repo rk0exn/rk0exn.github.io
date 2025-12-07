@@ -10,6 +10,7 @@ class JSONTreeViewer {
         this.loader = new FileLoader();
         this.themeManager = new ThemeManager();
         this.currentData = null;
+        this.focusedItem = null;
 
         this.initElements();
         this.bindEvents();
@@ -64,6 +65,123 @@ class JSONTreeViewer {
                 this.parseJSON();
             }
         });
+
+        // ツリービューのキーボード操作
+        document.addEventListener('keydown', (e) => this.handleTreeKeyboard(e));
+    }
+
+    handleTreeKeyboard(e) {
+        // ツリービューにフォーカスがない、または入力フィールドにフォーカスがある場合は無視
+        if (!this.currentData || 
+            document.activeElement.tagName === 'INPUT' || 
+            document.activeElement.tagName === 'TEXTAREA') {
+            return;
+        }
+
+        const items = Array.from(this.treeView.querySelectorAll('.tree-item'));
+        if (items.length === 0) return;
+
+        // 初回フォーカス
+        if (!this.focusedItem && (e.key === 'ArrowDown' || e.key === 'ArrowUp' || 
+            e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+            e.preventDefault();
+            this.setFocus(items[0]);
+            return;
+        }
+
+        if (!this.focusedItem) return;
+
+        const currentIndex = items.indexOf(this.focusedItem);
+        if (currentIndex === -1) return;
+
+        switch(e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                this.moveFocusDown(items, currentIndex);
+                break;
+            
+            case 'ArrowUp':
+                e.preventDefault();
+                this.moveFocusUp(items, currentIndex);
+                break;
+            
+            case 'ArrowRight':
+                e.preventDefault();
+                this.expandFocused();
+                break;
+            
+            case 'ArrowLeft':
+                e.preventDefault();
+                this.collapseFocused();
+                break;
+        }
+    }
+
+    setFocus(item) {
+        if (this.focusedItem) {
+            this.focusedItem.classList.remove('focused');
+        }
+        this.focusedItem = item;
+        item.classList.add('focused');
+        item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+
+    moveFocusDown(items, currentIndex) {
+        if (currentIndex < items.length - 1) {
+            this.setFocus(items[currentIndex + 1]);
+        }
+    }
+
+    moveFocusUp(items, currentIndex) {
+        if (currentIndex > 0) {
+            this.setFocus(items[currentIndex - 1]);
+        }
+    }
+
+    expandFocused() {
+        if (!this.focusedItem) return;
+
+        const toggleIcon = this.focusedItem.querySelector('.toggle-icon');
+        if (!toggleIcon || toggleIcon.classList.contains('leaf')) return;
+
+        const nodeWrapper = this.focusedItem.closest('.tree-node');
+        const childrenDiv = nodeWrapper.querySelector('.children');
+        
+        if (childrenDiv && !childrenDiv.classList.contains('expanded')) {
+            this.renderer.toggleNode(toggleIcon, childrenDiv);
+        }
+    }
+
+    collapseFocused() {
+        if (!this.focusedItem) return;
+
+        const toggleIcon = this.focusedItem.querySelector('.toggle-icon');
+        const nodeWrapper = this.focusedItem.closest('.tree-node');
+        const childrenDiv = nodeWrapper.querySelector('.children');
+
+        // 展開可能で現在展開されている場合は折りたたむ
+        if (toggleIcon && !toggleIcon.classList.contains('leaf') && 
+            childrenDiv && childrenDiv.classList.contains('expanded')) {
+            this.renderer.toggleNode(toggleIcon, childrenDiv);
+        } else {
+            // 折りたためない、または既に折りたたまれている場合は親に移動
+            this.moveToParent();
+        }
+    }
+
+    moveToParent() {
+        if (!this.focusedItem) return;
+
+        const currentNode = this.focusedItem.closest('.tree-node');
+        const parentChildren = currentNode.parentElement;
+        
+        // 親の.childrenを探す
+        if (parentChildren && parentChildren.classList.contains('children')) {
+            const parentNode = parentChildren.previousElementSibling;
+            if (parentNode && parentNode.classList.contains('tree-item')) {
+                this.setFocus(parentNode);
+            }
+        }
     }
 
     switchTab(tabName) {
@@ -142,6 +260,7 @@ class JSONTreeViewer {
             try {
                 this.currentData = this.parser.parse(input);
                 this.renderer.render(this.treeView, this.currentData);
+                this.focusedItem = null; // フォーカスをリセット
                 this.showSnackbar('解析完了');
             } catch (error) {
                 this.showSnackbar(`解析エラー: ${error.message}`, 'error');
@@ -159,6 +278,7 @@ class JSONTreeViewer {
         this.cacheInfo.classList.remove('active');
         this.treeView.innerHTML = '';
         this.currentData = null;
+        this.focusedItem = null;
         this.showSnackbar('クリアしました');
     }
 

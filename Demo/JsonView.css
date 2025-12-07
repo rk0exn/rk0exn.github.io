@@ -391,6 +391,12 @@ h2 {
     background: var(--hover-bg);
 }
 
+.tree-item.focused {
+    background: var(--hover-bg);
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+}
+
 .toggle-icon {
     width: 24px;
     height: 24px;
