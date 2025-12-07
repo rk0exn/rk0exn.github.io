@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+  <meta name="robots"
+    content="noindex, nofollow, noarchive, nosnippet, max-image-preview:none, max-video-preview:0, noimageindex, unavailable-after:Thu, 24 Nov 2022 00:00:00 +0900">
+  <title>JSON Tree Viewer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="./JsonView.css">
+</head>
+
+<body>
+  <header class="app-bar">
+    <div class="container">
+      <span class="material-icons">account_tree</span>
+      <h1>JSON Tree Viewer</h1>
+      <button class="btn-icon theme-toggle" id="themeToggle" title="テーマ切り替え">
+        <span class="material-icons">dark_mode</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="card input-card">
+      <div class="card-content">
+        <h2>データソース</h2>
+
+        <div class="tabs">
+          <button class="tab-button active" data-tab="file">
+            <span class="material-icons">upload_file</span>
+            ファイル
+          </button>
+          <button class="tab-button" data-tab="url">
+            <span class="material-icons">link</span>
+            URL
+          </button>
+          <button class="tab-button" data-tab="manual">
+            <span class="material-icons">edit</span>
+            手動入力
+          </button>
+        </div>
+
+        <div class="tab-content active" data-content="file">
+          <div class="file-input-wrapper">
+            <input type="file" id="fileInput" accept=".json,application/json" hidden>
+            <button class="btn btn-outlined" id="selectFileBtn">
+              <span class="material-icons">folder_open</span>
+              ファイルを選択
+            </button>
+            <span id="fileName" class="file-name">ファイルが選択されていません</span>
+          </div>
+        </div>
+
+        <div class="tab-content" data-content="url">
+          <div class="input-field">
+            <input type="text" id="urlInput" placeholder=" " />
+            <label>JSON URL</label>
+          </div>
+          <button class="btn btn-primary" id="loadUrlBtn">
+            <span class="material-icons">download</span>
+            URLから読み込み
+          </button>
+          <div id="cacheInfo" class="cache-info"></div>
+        </div>
+
+        <div class="tab-content" data-content="manual">
+          <div class="input-field">
+            <textarea id="jsonInput" placeholder=" " rows="10"></textarea>
+            <label>JSON データ</label>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-primary" id="parseBtn">
+            <span class="material-icons">play_arrow</span>
+            解析
+          </button>
+          <button class="btn btn-outlined" id="sampleBtn">
+            <span class="material-icons">insert_drive_file</span>
+            サンプル
+          </button>
+          <button class="btn btn-text" id="clearBtn">
+            <span class="material-icons">clear</span>
+            クリア
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card output-card">
+      <div class="card-content">
+        <div class="card-header">
+          <h2>ツリー表示</h2>
+          <div class="toolbar">
+            <button class="btn-icon" id="expandAllBtn" title="全て展開">
+              <span class="material-icons">unfold_more</span>
+            </button>
+            <button class="btn-icon" id="collapseAllBtn" title="全て折りたたむ">
+              <span class="material-icons">unfold_less</span>
+            </button>
+          </div>
+        </div>
+        <div id="treeView" class="tree-view"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Copyright (c) 2025 rk0exn All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div id="snackbar" class="snackbar"></div>
+
+  <div id="progressBar" class="progress-bar">
+    <div class="progress-bar-indeterminate"></div>
+  </div>
+
+  <script type="module" src="./JsonView.js"></script>
+</body>
+
+</html>
