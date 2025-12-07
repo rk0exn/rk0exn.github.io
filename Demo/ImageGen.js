@@ -13,16 +13,6 @@ function makeRng(seed) {
     };
 }
 
-function makeRng(seed) {
-    let x = seed | 0;
-    return () => {
-        x ^= x << 13;
-        x ^= x >>> 17;
-        x ^= x << 5;
-        return (x >>> 0) / 0xFFFFFFFF;
-    };
-}
-
 async function sha512Seed(text) {
     const encoder = new TextEncoder();
     const data = encoder.encode(text);
@@ -113,4 +103,5 @@ document.getElementById("fileInput").addEventListener("change", e => {
     fileToSeed(file, params => {
         generateImage(params);
     });
+
 });
