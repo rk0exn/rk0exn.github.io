@@ -78,7 +78,8 @@ class JSONTreeViewer {
             return;
         }
 
-        const items = Array.from(this.treeView.querySelectorAll('.tree-item'));
+        // 表示されている項目のみを取得
+        const items = this.getVisibleItems();
         if (items.length === 0) return;
 
         // 初回フォーカス
@@ -117,6 +118,31 @@ class JSONTreeViewer {
         }
     }
 
+    getVisibleItems() {
+        const items = [];
+        const allItems = this.treeView.querySelectorAll('.tree-item');
+        
+        allItems.forEach(item => {
+            // 項目が表示されているかチェック
+            let node = item.parentElement;
+            let isVisible = true;
+            
+            while (node && node !== this.treeView) {
+                if (node.classList.contains('children') && !node.classList.contains('expanded')) {
+                    isVisible = false;
+                    break;
+                }
+                node = node.parentElement;
+            }
+            
+            if (isVisible) {
+                items.push(item);
+            }
+        });
+        
+        return items;
+    }
+
     setFocus(item) {
         if (this.focusedItem) {
             this.focusedItem.classList.remove('focused');
@@ -149,6 +175,12 @@ class JSONTreeViewer {
         
         if (childrenDiv && !childrenDiv.classList.contains('expanded')) {
             this.renderer.toggleNode(toggleIcon, childrenDiv);
+            // 展開後に可視項目リストが更新されるため、フォーカスを維持
+            setTimeout(() => {
+                if (this.focusedItem) {
+                    this.focusedItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                }
+            }, 0);
         }
     }
 
