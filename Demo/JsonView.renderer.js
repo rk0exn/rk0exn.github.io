@@ -7,7 +7,7 @@ export class TreeRenderer {
 
     render(container, data, rootKey = 'root') {
         container.innerHTML = '';
-        const rootNode = this.createTreeNode(rootKey, data, true, false);
+        const rootNode = this.createTreeNode(rootKey, data, true, true);  // ルートノードは展開
         container.appendChild(rootNode);
     }
 
@@ -27,7 +27,8 @@ export class TreeRenderer {
         if (isExpandable) {
             const icon = document.createElement('span');
             icon.className = 'material-icons';
-            icon.textContent = 'expand_more';
+            // 初期状態に応じてアイコンを設定
+            icon.textContent = initialExpanded ? 'expand_more' : 'chevron_right';
             toggleIcon.appendChild(icon);
         }
 
@@ -61,12 +62,12 @@ export class TreeRenderer {
 
             if (Array.isArray(value)) {
                 value.forEach((item, index) => {
-                    const childNode = this.createTreeNode(`[${index}]`, item);
+                    const childNode = this.createTreeNode(`[${index}]`, item, false, false);
                     childrenDiv.appendChild(childNode);
                 });
             } else {
                 Object.entries(value).forEach(([k, v]) => {
-                    const childNode = this.createTreeNode(k, v);
+                    const childNode = this.createTreeNode(k, v, false, false);
                     childrenDiv.appendChild(childNode);
                 });
             }
@@ -102,15 +103,22 @@ export class TreeRenderer {
 
     toggleNode(toggleIcon, childrenDiv) {
         const isExpanded = childrenDiv.classList.contains('expanded');
+        const icon = toggleIcon.querySelector('.material-icons');
         
         if (isExpanded) {
             childrenDiv.classList.remove('expanded');
             toggleIcon.classList.remove('expanded');
             toggleIcon.classList.add('collapsed');
+            if (icon) {
+                icon.textContent = 'chevron_right';
+            }
         } else {
             childrenDiv.classList.add('expanded');
             toggleIcon.classList.remove('collapsed');
             toggleIcon.classList.add('expanded');
+            if (icon) {
+                icon.textContent = 'expand_more';
+            }
         }
     }
 

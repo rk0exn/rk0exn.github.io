@@ -39,16 +39,61 @@ export class ThemeManager {
         this.updateThemeIcon(theme);
         this.setCookie('theme', theme, 365);
 
-        this.overrideSystemTheme(theme);
+        // テーマに応じたCSS変数を適用
+        this.applyThemeVariables(theme);
     }
 
-    overrideSystemTheme(theme) {
+    applyThemeVariables(theme) {
         const root = document.documentElement;
-
+        
         if (theme === 'light') {
             root.style.colorScheme = 'light';
+            // ライトモードの変数を設定
+            root.style.setProperty('--primary', '#1976d2');
+            root.style.setProperty('--primary-dark', '#1565c0');
+            root.style.setProperty('--primary-light', '#42a5f5');
+            root.style.setProperty('--accent', '#ff4081');
+            root.style.setProperty('--background', '#fafafa');
+            root.style.setProperty('--surface', '#ffffff');
+            root.style.setProperty('--error', '#f44336');
+            root.style.setProperty('--text-primary', 'rgba(0, 0, 0, 0.87)');
+            root.style.setProperty('--text-secondary', 'rgba(0, 0, 0, 0.60)');
+            root.style.setProperty('--text-disabled', 'rgba(0, 0, 0, 0.38)');
+            root.style.setProperty('--divider', 'rgba(0, 0, 0, 0.12)');
+            root.style.setProperty('--shadow-1', '0 2px 4px rgba(0,0,0,0.1)');
+            root.style.setProperty('--shadow-2', '0 4px 8px rgba(0,0,0,0.12)');
+            root.style.setProperty('--shadow-3', '0 8px 16px rgba(0,0,0,0.14)');
+            root.style.setProperty('--tree-bg', '#f5f5f5');
+            root.style.setProperty('--hover-bg', 'rgba(0, 0, 0, 0.04)');
+            root.style.setProperty('--value-default', '#2e7d32');
+            root.style.setProperty('--value-string', '#c62828');
+            root.style.setProperty('--value-number', '#1565c0');
+            root.style.setProperty('--value-boolean', '#6a1b9a');
+            root.style.setProperty('--value-null', '#757575');
         } else {
             root.style.colorScheme = 'dark';
+            // ダークモードの変数を設定（コントラスト改善版）
+            root.style.setProperty('--primary', '#64b5f6');  // より明るく変更
+            root.style.setProperty('--primary-dark', '#42a5f5');
+            root.style.setProperty('--primary-light', '#90caf9');
+            root.style.setProperty('--accent', '#ff4081');
+            root.style.setProperty('--background', '#121212');
+            root.style.setProperty('--surface', '#1e1e1e');
+            root.style.setProperty('--error', '#cf6679');
+            root.style.setProperty('--text-primary', 'rgba(255, 255, 255, 0.87)');
+            root.style.setProperty('--text-secondary', 'rgba(255, 255, 255, 0.60)');
+            root.style.setProperty('--text-disabled', 'rgba(255, 255, 255, 0.38)');
+            root.style.setProperty('--divider', 'rgba(255, 255, 255, 0.12)');
+            root.style.setProperty('--shadow-1', '0 2px 4px rgba(0,0,0,0.3)');
+            root.style.setProperty('--shadow-2', '0 4px 8px rgba(0,0,0,0.4)');
+            root.style.setProperty('--shadow-3', '0 8px 16px rgba(0,0,0,0.5)');
+            root.style.setProperty('--tree-bg', '#2a2a2a');
+            root.style.setProperty('--hover-bg', 'rgba(255, 255, 255, 0.08)');
+            root.style.setProperty('--value-default', '#81c784');
+            root.style.setProperty('--value-string', '#ef5350');
+            root.style.setProperty('--value-number', '#64b5f6');
+            root.style.setProperty('--value-boolean', '#ba68c8');
+            root.style.setProperty('--value-null', '#bdbdbd');
         }
     }
 
