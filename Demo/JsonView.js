@@ -12,6 +12,9 @@ class JSONTreeViewer {
         this.currentData = null;
         this.focusedItem = null;
 
+        // レンダラーのコールバックを設定
+        this.renderer.onItemClick = (item) => this.handleItemClick(item);
+
         this.initElements();
         this.bindEvents();
     }
@@ -214,6 +217,11 @@ class JSONTreeViewer {
                 this.setFocus(parentNode);
             }
         }
+    }
+
+    handleItemClick(item) {
+        // クリックされた項目にフォーカスを設定
+        this.setFocus(item);
     }
 
     switchTab(tabName) {

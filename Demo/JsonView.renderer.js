@@ -3,6 +3,7 @@ import { JSONParser } from './JsonView.parser.js';
 export class TreeRenderer {
     constructor() {
         this.parser = new JSONParser();
+        this.onItemClick = null; // コールバック関数
     }
 
     render(container, data, rootKey = 'root') {
@@ -87,6 +88,10 @@ export class TreeRenderer {
             itemDiv.addEventListener('click', (e) => {
                 e.stopPropagation();
                 this.toggleNode(toggleIcon, childrenDiv);
+                // クリック時にコールバックを呼び出し
+                if (this.onItemClick) {
+                    this.onItemClick(itemDiv);
+                }
             });
 
         } else {
@@ -96,6 +101,14 @@ export class TreeRenderer {
             
             itemDiv.appendChild(valueSpan);
             nodeWrapper.appendChild(itemDiv);
+            
+            // 葉ノードもクリック可能に
+            itemDiv.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (this.onItemClick) {
+                    this.onItemClick(itemDiv);
+                }
+            });
         }
 
         return nodeWrapper;
