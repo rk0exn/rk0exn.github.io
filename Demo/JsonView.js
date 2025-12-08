@@ -298,9 +298,24 @@ class JSONTreeViewer {
 
         setTimeout(() => {
             try {
+                // 古いデータをクリア
+                if (this.currentData) {
+                    this.currentData = null;
+                }
+                
+                // フォーカスをクリア
+                if (this.focusedItem) {
+                    this.focusedItem.classList.remove('focused');
+                    this.focusedItem = null;
+                }
+                
+                // 既存のツリーを完全にクリア
+                this.clearTreeView();
+                
+                // 新しいデータを解析
                 this.currentData = this.parser.parse(input);
                 this.renderer.render(this.treeView, this.currentData);
-                this.focusedItem = null; // フォーカスをリセット
+                
                 this.showSnackbar('解析完了');
             } catch (error) {
                 this.showSnackbar(`解析エラー: ${error.message}`, 'error');
@@ -310,15 +325,42 @@ class JSONTreeViewer {
         }, 50);
     }
 
+    clearTreeView() {
+        // イベントリスナーを持つすべての要素を削除
+        const items = this.treeView.querySelectorAll('.tree-item');
+        items.forEach(item => {
+            // クローンを作成してイベントリスナーを削除
+            const clone = item.cloneNode(true);
+            if (item.parentNode) {
+                item.parentNode.replaceChild(clone, item);
+            }
+        });
+        
+        // DOMを完全にクリア
+        this.treeView.innerHTML = '';
+        
+        // ガベージコレクションを促す
+        if (window.gc) {
+            window.gc();
+        }
+    }
+
     clear() {
         this.jsonInput.value = '';
         this.urlInput.value = '';
         this.fileName.textContent = 'ファイルが選択されていません';
         this.fileInput.value = '';
         this.cacheInfo.classList.remove('active');
-        this.treeView.innerHTML = '';
+        
+        // メモリをクリア
+        if (this.focusedItem) {
+            this.focusedItem.classList.remove('focused');
+            this.focusedItem = null;
+        }
+        
+        this.clearTreeView();
         this.currentData = null;
-        this.focusedItem = null;
+        
         this.showSnackbar('クリアしました');
     }
 

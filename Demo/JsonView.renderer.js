@@ -3,13 +3,22 @@ import { JSONParser } from './JsonView.parser.js';
 export class TreeRenderer {
     constructor() {
         this.parser = new JSONParser();
-        this.onItemClick = null; // コールバック関数
+        this.onItemClick = null;
+        this.eventListeners = new WeakMap(); // イベントリスナーを追跡
     }
 
     render(container, data, rootKey = 'root') {
+        // 既存のイベントリスナーをクリーンアップ
+        this.cleanup(container);
+        
         container.innerHTML = '';
-        const rootNode = this.createTreeNode(rootKey, data, true, true);  // ルートノードは展開
+        const rootNode = this.createTreeNode(rootKey, data, true, true);
         container.appendChild(rootNode);
+    }
+
+    cleanup(container) {
+        // WeakMapは自動的にクリーンアップされるが、明示的にクリア
+        this.eventListeners = new WeakMap();
     }
 
     createTreeNode(key, value, isRoot = false, initialExpanded = false) {
@@ -28,7 +37,6 @@ export class TreeRenderer {
         if (isExpandable) {
             const icon = document.createElement('span');
             icon.className = 'material-icons';
-            // 初期状態に応じてアイコンを設定
             icon.textContent = initialExpanded ? 'expand_more' : 'chevron_right';
             toggleIcon.appendChild(icon);
         }
@@ -61,15 +69,18 @@ export class TreeRenderer {
             const childrenDiv = document.createElement('div');
             childrenDiv.className = `children ${initialExpanded ? 'expanded' : ''}`;
 
+            // DocumentFragmentを使用してパフォーマンス向上
+            const fragment = document.createDocumentFragment();
+            
             if (Array.isArray(value)) {
                 value.forEach((item, index) => {
                     const childNode = this.createTreeNode(`[${index}]`, item, false, false);
-                    childrenDiv.appendChild(childNode);
+                    fragment.appendChild(childNode);
                 });
             } else {
                 Object.entries(value).forEach(([k, v]) => {
                     const childNode = this.createTreeNode(k, v, false, false);
-                    childrenDiv.appendChild(childNode);
+                    fragment.appendChild(childNode);
                 });
             }
 
@@ -80,19 +91,24 @@ export class TreeRenderer {
             closeBracketSpan.className = 'bracket';
             closeBracketSpan.textContent = Array.isArray(value) ? ']' : '}';
             closingBracket.appendChild(closeBracketSpan);
-            childrenDiv.appendChild(closingBracket);
+            fragment.appendChild(closingBracket);
+            
+            childrenDiv.appendChild(fragment);
 
             nodeWrapper.appendChild(itemDiv);
             nodeWrapper.appendChild(childrenDiv);
 
-            itemDiv.addEventListener('click', (e) => {
+            // イベントリスナーを保存して再利用
+            const clickHandler = (e) => {
                 e.stopPropagation();
                 this.toggleNode(toggleIcon, childrenDiv);
-                // クリック時にコールバックを呼び出し
                 if (this.onItemClick) {
                     this.onItemClick(itemDiv);
                 }
-            });
+            };
+            
+            this.eventListeners.set(itemDiv, clickHandler);
+            itemDiv.addEventListener('click', clickHandler);
 
         } else {
             const valueSpan = document.createElement('span');
@@ -103,12 +119,15 @@ export class TreeRenderer {
             nodeWrapper.appendChild(itemDiv);
             
             // 葉ノードもクリック可能に
-            itemDiv.addEventListener('click', (e) => {
+            const clickHandler = (e) => {
                 e.stopPropagation();
                 if (this.onItemClick) {
                     this.onItemClick(itemDiv);
                 }
-            });
+            };
+            
+            this.eventListeners.set(itemDiv, clickHandler);
+            itemDiv.addEventListener('click', clickHandler);
         }
 
         return nodeWrapper;

@@ -103,13 +103,11 @@ export class ThemeManager {
         // color-schemeの設定
         root.style.colorScheme = theme;
         
-        // CSS変数を一括設定（requestAnimationFrameで最適化）
-        requestAnimationFrame(() => {
-            const vars = themes[theme];
-            for (const [property, value] of Object.entries(vars)) {
-                root.style.setProperty(property, value);
-            }
-        });
+        // CSS変数を直接設定（requestAnimationFrameを削除してメモリリークを防止）
+        const vars = themes[theme];
+        for (const [property, value] of Object.entries(vars)) {
+            root.style.setProperty(property, value);
+        }
     }
 
     toggleTheme() {
