@@ -35,7 +35,7 @@
     </div>
     
     <script type="module">
-        import { authenticate, setAuthCookie, getSessionID } from './blogcert.js';
+        import { authenticate, setAuthCookie, getSessionID, verifyAuth } from './blogcert.js';
         
         // セッションID自動取得
         const autoSessionID = getSessionID();
@@ -57,7 +57,7 @@
             
             if (isValid) {
                 setAuthCookie(sessionID, password);
-                window.location.href = 'blogview.html';
+                window.location.href = 'blogview';
             } else {
                 errorDiv.textContent = '認証に失敗しました。パスワードが正しくありません。';
             }
@@ -66,6 +66,10 @@
         document.getElementById('password').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') handleLogin();
         });
+
+        if (await verifyAuth()) {
+            window.location.href = 'blogview';
+        }
     </script>
 </body>
 </html>
