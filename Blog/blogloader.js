@@ -2,11 +2,37 @@ import { decryptContent } from './crypto.js';
 import { parseMarkdownMetadata, markdownToHtml } from './markdown-parser.js';
 
 const ENCRYPTION_PASSWORD = 'Dy2b9a!p';
-const BLOG_INDEX = [
-    { id: 1, title: '最初の投稿', date: '2025-01-15' },
-    { id: 2, title: '技術詳細', date: '2025-01-20' },
-    { id: 3, title: '今後の展望', date: '2025-02-01' }
-];
+
+// 動的に記事一覧を生成
+async function loadBlogIndex() {
+    const posts = [];
+    let pageId = 1;
+    
+    // blog_{id}.mdファイルの存在を確認
+    while (pageId <= 10) { // 最大10件まで確認
+        try {
+            const response = await fetch(`blog_${pageId}.md`);
+            if (response.ok) {
+                const encryptedContent = await response.text();
+                const decryptedMarkdown = decryptContent(encryptedContent, ENCRYPTION_PASSWORD);
+                const { metadata } = parseMarkdownMetadata(decryptedMarkdown);
+                
+                posts.push({
+                    id: pageId,
+                    title: metadata.title || `記事 ${pageId}`,
+                    date: metadata.date || new Date().toISOString().split('T')[0]
+                });
+            } else {
+                break; // ファイルが存在しない場合は終了
+            }
+        } catch (error) {
+            break; // エラーが発生した場合は終了
+        }
+        pageId++;
+    }
+    
+    return posts;
+}
 
 export async function loadBlogPost(pageId) {
     try {
@@ -24,6 +50,10 @@ export async function loadBlogPost(pageId) {
         const title = metadata.title || `記事 ${pageId}`;
         const date = metadata.date || new Date().toISOString().split('T')[0];
         
+        // 動的に記事一覧を取得してナビゲーションを生成
+        const blogIndex = await loadBlogIndex();
+        const maxPageId = Math.max(...blogIndex.map(p => p.id));
+        
         return `
             <article class="blog-post">
                 <header class="post-header">
@@ -34,9 +64,9 @@ export async function loadBlogPost(pageId) {
                     ${htmlContent}
                 </div>
                 <nav class="post-navigation">
-                    ${pageId > 1 ? `<a href="?page=${pageId - 1}" class="btn-secondary">前の記事</a>` : ''}
+                    ${pageId > 1 ? `<a href="?page=${pageId - 1}" class="btn-secondary">前の記事</a>` : '<span></span>'}
                     <a href="blogview.html" class="btn-secondary">一覧に戻る</a>
-                    ${BLOG_INDEX.find(p => p.id === pageId + 1) ? `<a href="?page=${pageId + 1}" class="btn-secondary">次の記事</a>` : ''}
+                    ${pageId < maxPageId ? `<a href="?page=${pageId + 1}" class="btn-secondary">次の記事</a>` : '<span></span>'}
                 </nav>
             </article>
         `;
@@ -46,7 +76,18 @@ export async function loadBlogPost(pageId) {
 }
 
 export async function loadMainContent() {
-    const postList = BLOG_INDEX
+    const blogIndex = await loadBlogIndex();
+    
+    if (blogIndex.length === 0) {
+        return `
+            <div class="main-content">
+                <h2>ブログ記事一覧</h2>
+                <p>現在、記事がありません。</p>
+            </div>
+        `;
+    }
+    
+    const postList = blogIndex
         .map(post => `
             <article class="post-preview">
                 <h3><a href="?page=${post.id}">${post.title}</a></h3>

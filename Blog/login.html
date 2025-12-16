@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン</title>
     <link rel="stylesheet" href="blog.css">
-    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <meta name="robots"
         content="noindex, nofollow, noarchive, nosnippet, max-image-preview:none, max-video-preview:0, noimageindex, unavailable-after:Thu, 24 Nov 2022 00:00:00 +0900">
 </head>
@@ -20,8 +20,8 @@
             <div class="login-form">
                 <h2>認証情報を入力</h2>
                 <div class="form-group">
-                    <label for="ssid">SSID:</label>
-                    <input type="text" id="ssid" placeholder="SSIDを入力">
+                    <label for="sessionid">セッションID (自動取得):</label>
+                    <div id="sessionid" class="ssid-display">読み込み中...</div>
                 </div>
                 <div class="form-group">
                     <label for="password">パスワード:</label>
@@ -35,27 +35,31 @@
     </div>
     
     <script type="module">
-        import { authenticate, setAuthCookie } from './blogcert.js';
+        import { authenticate, setAuthCookie, getSessionID } from './blogcert.js';
+        
+        // セッションID自動取得
+        const autoSessionID = getSessionID();
+        document.getElementById('sessionid').textContent = autoSessionID;
         
         window.handleLogin = async function() {
-            const ssid = document.getElementById('ssid').value;
+            const sessionID = autoSessionID;
             const password = document.getElementById('password').value;
             const errorDiv = document.getElementById('error-message');
             
             errorDiv.textContent = '';
             
-            if (!ssid || !password) {
-                errorDiv.textContent = 'SSIDとパスワードを入力してください';
+            if (!password) {
+                errorDiv.textContent = 'パスワードを入力してください';
                 return;
             }
             
-            const isValid = await authenticate(ssid, password);
+            const isValid = await authenticate(sessionID, password);
             
             if (isValid) {
-                setAuthCookie(ssid, password);
+                setAuthCookie(sessionID, password);
                 window.location.href = 'blogview.html';
             } else {
-                errorDiv.textContent = '認証に失敗しました。SSIDまたはパスワードが正しくありません。';
+                errorDiv.textContent = '認証に失敗しました。パスワードが正しくありません。';
             }
         };
         

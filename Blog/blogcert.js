@@ -8,20 +8,49 @@ async function generateHash(text) {
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-export async function authenticate(ssid, password) {
-    const combined = ssid + password;
+export function getSessionID() {
+    // ブラウザフィンガープリントベースのセッションID生成
+    const nav = navigator;
+    const screen = window.screen;
+    
+    const components = [
+        nav.userAgent,
+        nav.language,
+        screen.width + 'x' + screen.height,
+        screen.colorDepth,
+        new Date().getTimezoneOffset(),
+        !!window.sessionStorage,
+        !!window.localStorage
+    ];
+    
+    // シンプルなハッシュ生成
+    let hash = 0;
+    const str = components.join('|');
+    for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+    }
+    
+    const sessionID = 'SESSION_' + Math.abs(hash).toString(16).toUpperCase().substring(0, 12);
+    
+    return sessionID;
+}
+
+export async function authenticate(sessionID, password) {
+    const combined = sessionID + password;
     const hash = await generateHash(combined);
     
     if (password !== VALID_PASSWORD) {
         return false;
     }
     
-    const validHash = await generateHash(ssid + VALID_PASSWORD);
+    const validHash = await generateHash(sessionID + VALID_PASSWORD);
     return hash === validHash;
 }
 
-export function setAuthCookie(ssid, password) {
-    const cookieValue = `項目名=${ssid}、内容=${password}`;
+export function setAuthCookie(sessionID, password) {
+    const cookieValue = `項目名=${sessionID}、内容=${password}`;
     const expires = new Date();
     expires.setDate(expires.getDate() + 7);
     document.cookie = `blogAuth=${encodeURIComponent(cookieValue)}; expires=${expires.toUTCString()}; path=/; SameSite=Strict`;
@@ -35,7 +64,7 @@ export function getAuthCookie() {
             const decodedValue = decodeURIComponent(value);
             const parts = decodedValue.match(/項目名=([^、]+)、内容=(.+)/);
             if (parts) {
-                return { ssid: parts[1], password: parts[2] };
+                return { sessionID: parts[1], password: parts[2] };
             }
         }
     }
@@ -45,7 +74,7 @@ export function getAuthCookie() {
 export async function verifyAuth() {
     const auth = getAuthCookie();
     if (!auth) return false;
-    return await authenticate(auth.ssid, auth.password);
+    return await authenticate(auth.sessionID, auth.password);
 }
 
 export function clearAuthCookie() {
