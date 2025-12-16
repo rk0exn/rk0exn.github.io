@@ -1,0 +1,153 @@
+.blog-post {
+    padding: 20px 0;
+}
+
+.post-header {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0
+}
+
+.post-header h2 {
+    color: #667eea;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.post-date {
+    color: #888;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.post-content {
+    line-height: 1.8;
+    color: #444;
+}
+
+.post-content h1 {
+    color: #667eea;
+    font-size: 26px;
+    margin: 30px 0 15px;
+}
+
+.post-content h2 {
+    color: #667eea;
+    font-size: 24px;
+    margin: 25px 0 15px;
+}
+
+.post-content h3 {
+    color: #764ba2;
+    margin: 25px 0 15px;
+    font-size: 20px;
+}
+
+.post-content p {
+    margin-bottom: 15px;
+}
+
+.post-content ul {
+    margin: 15px 0 15px 30px;
+}
+
+.post-content li {
+    margin-bottom: 8px;
+}
+
+.post-content a {
+    color: #667eea;
+    text-decoration: none;
+    border-bottom: 1px solid #667eea;
+}
+
+.post-content a:hover {
+    color: #764ba2;
+    border-bottom-color: #764ba2;
+}
+
+.post-content strong {
+    font-weight: 600;
+    color: #333;
+}
+
+.post-content em {
+    font-style: italic;
+    color: #555;
+}
+
+.post-content code {
+    background: #f5f5f5;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+.post-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    padding-top: 25px;
+    border-top: 2px solid #e0e0e0;
+    gap: 10px;
+}
+
+.main-content h2 {
+    color: #667eea;
+    margin-bottom: 25px;
+    font-size: 26px;
+}
+
+.post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.post-preview {
+    padding: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.post-preview:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102,126,234,0.15);
+    transform: translateY(-2px);
+}
+
+.post-preview h3 {
+    color: #667eea;
+    text-decoration: none;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+.post-preview h3 a:hover {
+    color: #764ba2;
+}
+
+.post-preview .post-date {
+    display: block;
+    margin-bottom: 12px;
+}
+
+.post-preview p {
+    color: #666;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .post-navigation {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .post-navigation a {
+        flex: 1 1 auto;
+        min-width: 120px;
+    }
+}
