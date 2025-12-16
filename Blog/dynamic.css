@@ -85,6 +85,39 @@
     color: var(--text-primary);
 }
 
+.post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+}
+
+.post-content thead {
+    background: var(--accent-primary);
+    color: white;
+}
+
+.post-content th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+}
+
+.post-content td {
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+}
+
+.post-content tbody tr:nth-child(even) {
+    background: var(--hint-bg);
+}
+
+.post-content tbody tr:hover {
+    background: var(--border-color);
+}
+
 .post-navigation {
     display: flex;
     justify-content: space-between;
