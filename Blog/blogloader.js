@@ -52,7 +52,12 @@ export async function loadBlogPost(pageId) {
         
         // 動的に記事一覧を取得してナビゲーションを生成
         const blogIndex = await loadBlogIndex();
-        const maxPageId = Math.max(...blogIndex.map(p => p.id));
+        
+        // 前の記事の存在確認
+        const hasPrevious = pageId > 1 && (await checkBlogExists(pageId - 1));
+        
+        // 次の記事の存在確認
+        const hasNext = await checkBlogExists(pageId + 1);
         
         return `
             <article class="blog-post">
@@ -64,14 +69,33 @@ export async function loadBlogPost(pageId) {
                     ${htmlContent}
                 </div>
                 <nav class="post-navigation">
-                    ${pageId > 1 ? `<a href="?page=${pageId - 1}" class="btn-secondary">前の記事</a>` : '<span></span>'}
+                    ${hasPrevious ? `<a href="?page=${pageId - 1}" class="btn-secondary">前のブログへ</a>` : '<span></span>'}
                     <a href="blogview.html" class="btn-secondary">一覧に戻る</a>
-                    ${pageId < maxPageId ? `<a href="?page=${pageId + 1}" class="btn-secondary">次の記事</a>` : '<span></span>'}
+                    ${hasNext ? `<a href="?page=${pageId + 1}" class="btn-secondary">次のブログへ</a>` : '<span></span>'}
                 </nav>
             </article>
         `;
     } catch (error) {
         throw new Error(`記事の読み込みに失敗しました: ${error.message}`);
+    }
+}
+
+/**
+ * 指定されたブログ記事が存在するかチェック
+ * @param {number} pageId - チェックするページID
+ * @returns {Promise<boolean>} 存在する場合true
+ */
+async function checkBlogExists(pageId) {
+    try {
+        const response = await fetch(`blog_${pageId}.md`, { method: 'HEAD' });
+        if (response.ok) {
+            return true;
+        }
+        // HEADメソッドが使えない場合はGETで試行
+        const getResponse = await fetch(`blog_${pageId}.md`);
+        return getResponse.ok;
+    } catch (error) {
+        return false;
     }
 }
 
