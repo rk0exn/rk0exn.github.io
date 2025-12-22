@@ -70,7 +70,7 @@ export async function loadBlogPost(pageId) {
                 </div>
                 <nav class="post-navigation">
                     ${hasPrevious ? `<a href="?page=${pageId - 1}" class="btn-secondary">前のブログへ</a>` : '<span></span>'}
-                    <a href="blogview.html" class="btn-secondary">一覧に戻る</a>
+                    <a href="blogview" class="btn-secondary">一覧に戻る</a>
                     ${hasNext ? `<a href="?page=${pageId + 1}" class="btn-secondary">次のブログへ</a>` : '<span></span>'}
                 </nav>
             </article>
