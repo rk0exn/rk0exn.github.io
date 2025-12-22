@@ -88,7 +88,7 @@ nav a {
     transition: color 0.3s;
 }
 
-nav a:hover {
+nav a:not(.btn-secondary):hover {
     color: var(--accent-secondary);
 }
 
