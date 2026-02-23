@@ -1,4 +1,4 @@
-const VALID_PASSWORD = 'test0b21';
+const VALID_PASSWORD = 'test1b21';
 
 async function generateHash(text) {
     const encoder = new TextEncoder();

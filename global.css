@@ -99,7 +99,7 @@ ul {
     left: 0;
     bottom: 0;
     width: 100vw;
-    background: linear-gradient(0.25turn, var(--footer-bg), #9049FF, #08F);
+    background: linear-gradient(0.25turn, var(--footer-bg), #482480, #048);
     color: var(--footer-text);
     text-align: center;
     padding: 14px 0;
