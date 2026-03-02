@@ -11,42 +11,12 @@
     <title>n0xa.f5.si</title>
     <link rel="stylesheet" href="./global.css">
     <!--
-        MSHTA検出: JScriptはES3相当のため classList / const / テンプレートリテラル不可。
-        var・setAttribute・document.write のみで完結させる。
-        CSSも読み込めない前提でインラインスタイルのフォールバックを直接書く。
+        MSHTA検出: VBScriptを静的に記述し、MSHTA上でのみ実行されるMsgBoxでブロックする。
+        通常ブラウザはtype="text/vbscript"を無視するため副作用なし。
     -->
-    <script>
-        if (/MSHTA/i.test(navigator.userAgent)) {
-            document.write(
-                '<style>' +
-                    'body > *:not(#mshta-block) { display: none !important; }' +
-                    '#mshta-block {' +
-                        'position: fixed; inset: 0; z-index: 9999;' +
-                        'background: #1a1a1a; color: #f0f0f0;' +
-                        'display: flex; align-items: center; justify-content: center;' +
-                        'font-family: Meiryo, sans-serif; padding: 20px; box-sizing: border-box;' +
-                    '}' +
-                    '#mshta-block div {' +
-                        'background: #2c2c2c; border: 2px solid #ff4444;' +
-                        'border-radius: 8px; padding: 28px 32px; max-width: 600px; width: 100%;' +
-                    '}' +
-                    '#mshta-block h1 { color: #ff4444; font-size: 18px; margin: 0 0 12px; }' +
-                    '#mshta-block p  { color: #cccccc; font-size: 13px; margin: 6px 0; }' +
-                    '#mshta-block ul { color: #cccccc; font-size: 13px; margin: 8px 0; padding-left: 1.4em; }' +
-                '</style>' +
-                '<div id="mshta-block"><div>' +
-                    '<h1>&#9940; アクセスが拒否されました</h1>' +
-                    '<p>MSHTAからのアクセスはセキュリティ上の理由によりブロックされています。</p>' +
-                    '<p>このサイトを閲覧するには通常のWebブラウザをご利用ください。</p>' +
-                    '<ul>' +
-                        '<li>Microsoft Edge（最新版）</li>' +
-                        '<li>Google Chrome（最新版）</li>' +
-                        '<li>Mozilla Firefox（最新版）</li>' +
-                        '<li>Apple Safari（最新版）</li>' +
-                    '</ul>' +
-                '</div></div>'
-            );
-        }
+    <script type="text/vbscript">
+        MsgBox "このサイトへのアクセスはセキュリティ上の理由によりブロックされました。" & Chr(13) & Chr(10) & Chr(13) & Chr(10) & "MSHTAからのアクセスは許可されていません。" & Chr(13) & Chr(10) & "通常のWebブラウザをご利用ください。", 16, "Access Denied - n0xa.f5.si"
+        window.close()
     </script>
 </head>
 
