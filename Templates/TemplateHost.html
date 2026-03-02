@@ -10,9 +10,42 @@
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     <title>n0xa.f5.si - TemplateHost</title>
     <link rel="stylesheet" href="./template_global.css">
+    <!--
+        MSHTA検出: JScriptはES3相当のため classList / const / テンプレートリテラル不可。
+        var・setAttribute・document.write のみで完結させる。
+        CSSも読み込めない前提でインラインスタイルのフォールバックを直接書く。
+    -->
     <script>
         if (/MSHTA/i.test(navigator.userAgent)) {
-            document.documentElement.classList.add('is-mshta');
+            document.write(
+                '<style>' +
+                    'body > *:not(#mshta-block) { display: none !important; }' +
+                    '#mshta-block {' +
+                        'position: fixed; inset: 0; z-index: 9999;' +
+                        'background: #1a1a1a; color: #f0f0f0;' +
+                        'display: flex; align-items: center; justify-content: center;' +
+                        'font-family: Meiryo, sans-serif; padding: 20px; box-sizing: border-box;' +
+                    '}' +
+                    '#mshta-block div {' +
+                        'background: #2c2c2c; border: 2px solid #ff4444;' +
+                        'border-radius: 8px; padding: 28px 32px; max-width: 600px; width: 100%;' +
+                    '}' +
+                    '#mshta-block h1 { color: #ff4444; font-size: 18px; margin: 0 0 12px; }' +
+                    '#mshta-block p  { color: #cccccc; font-size: 13px; margin: 6px 0; }' +
+                    '#mshta-block ul { color: #cccccc; font-size: 13px; margin: 8px 0; padding-left: 1.4em; }' +
+                '</style>' +
+                '<div id="mshta-block"><div>' +
+                    '<h1>&#9940; アクセスが拒否されました</h1>' +
+                    '<p>MSHTAからのアクセスはセキュリティ上の理由によりブロックされています。</p>' +
+                    '<p>このサイトを閲覧するには通常のWebブラウザをご利用ください。</p>' +
+                    '<ul>' +
+                        '<li>Microsoft Edge（最新版）</li>' +
+                        '<li>Google Chrome（最新版）</li>' +
+                        '<li>Mozilla Firefox（最新版）</li>' +
+                        '<li>Apple Safari（最新版）</li>' +
+                    '</ul>' +
+                '</div></div>'
+            );
         }
     </script>
 </head>
@@ -42,9 +75,9 @@
         Copyright (c) 2025 - 2026 rk0exn All rights reserved.
     </footer>
 
-    <!-- IE検出: type="module"非対応ブラウザでのみ実行される -->
+    <!-- レガシーブラウザ検出: type="module"非対応環境でのみ実行される -->
     <script nomodule>
-        document.documentElement.classList.add('is-legacy-browser');
+        document.documentElement.setAttribute('data-env', 'legacy');
     </script>
 
     <div class="fallback-overlay" id="fallbackOverlay" hidden>
@@ -75,29 +108,31 @@
 
     <script>
         (function () {
-            const overlay  = document.getElementById('fallbackOverlay');
-            const title    = document.getElementById('fallbackTitle');
-            const desc     = document.getElementById('fallbackDesc');
-            const desc2    = document.getElementById('fallbackDesc2');
-            const list     = document.getElementById('fallbackList');
-            const browsers = ['Microsoft Edge（最新版）', 'Google Chrome（最新版）', 'Mozilla Firefox（最新版）', 'Apple Safari（最新版）'];
+            var overlay = document.getElementById('fallbackOverlay');
+            var title   = document.getElementById('fallbackTitle');
+            var desc    = document.getElementById('fallbackDesc');
+            var desc2   = document.getElementById('fallbackDesc2');
+            var list    = document.getElementById('fallbackList');
+            var browsers = [
+                'Microsoft Edge（最新版）',
+                'Google Chrome（最新版）',
+                'Mozilla Firefox（最新版）',
+                'Apple Safari（最新版）'
+            ];
 
             function showFallback(titleText, d1, d2, items) {
-                title.textContent  = titleText;
-                desc.textContent   = d1;
-                desc2.textContent  = d2;
-                list.innerHTML     = items.map(s => `<li>${s}</li>`).join('');
-                overlay.hidden     = false;
+                title.textContent = titleText;
+                desc.textContent  = d1;
+                desc2.textContent = d2;
+                var html = '';
+                for (var i = 0; i < items.length; i++) {
+                    html += '<li>' + items[i] + '</li>';
+                }
+                list.innerHTML = html;
+                overlay.hidden = false;
             }
 
-            if (document.documentElement.classList.contains('is-mshta')) {
-                showFallback(
-                    '⛔ アクセスが拒否されました',
-                    'MSHTAからのアクセスはセキュリティ上の理由によりブロックされています。',
-                    'このサイトを閲覧するには通常のWebブラウザをご利用ください。',
-                    browsers
-                );
-            } else if (document.documentElement.classList.contains('is-legacy-browser')) {
+            if (document.documentElement.getAttribute('data-env') === 'legacy') {
                 showFallback(
                     '⚠️ このブラウザには対応していません',
                     'このサイトはInternet Explorerおよびレガシーブラウザに対応していません。',
