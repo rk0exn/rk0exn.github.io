@@ -157,8 +157,7 @@
       margin-bottom: 6px;
     }
 
-    .group input[type="color"],
-    .group select {
+    .group input[type="color"] {
       width: 100%;
       min-height: 40px;
       border-radius: 8px;
@@ -166,6 +165,63 @@
       background: var(--bg-layer2);
       color: var(--text);
       padding: 6px 10px;
+    }
+
+    .menu {
+      position: relative;
+    }
+
+    .menu-trigger {
+      width: 100%;
+      min-height: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--stroke-strong);
+      background: var(--bg-layer2);
+      color: var(--text);
+      padding: 8px 10px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .menu-list {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 6px);
+      z-index: 40;
+      background: var(--bg-layer);
+      border: 1px solid var(--stroke);
+      border-radius: 8px;
+      box-shadow: var(--shadow-card);
+      padding: 6px;
+      display: none;
+      gap: 4px;
+    }
+
+    .menu.open .menu-list {
+      display: grid;
+    }
+
+    .menu-option {
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text);
+      border-radius: 6px;
+      min-height: 34px;
+      text-align: left;
+      padding: 6px 8px;
+      cursor: pointer;
+    }
+
+    .menu-option:hover,
+    .menu-option:focus-visible {
+      background: var(--fill-hover);
+      outline: none;
+    }
+
+    .menu-option.active {
+      border-color: var(--stroke-strong);
+      background: var(--fill-press);
     }
 
     .chips {
@@ -356,7 +412,9 @@
       .chip,
       button.main,
       input,
-      select {
+      .menu-trigger,
+      .menu-list,
+      .menu-option {
         forced-color-adjust: auto;
       }
     }
@@ -390,11 +448,16 @@
       <p data-i18n="app_desc">Fluent Design + 穏やかな緑テーマ。プレビューでテーマを擬似再現できます。</p>
 
       <div class="group">
-        <label for="langSelect" data-i18n="lang_label">UI Language</label>
-        <select id="langSelect">
-          <option value="ja">日本語</option>
-          <option value="en">English</option>
-        </select>
+        <label id="langMenuLabel" data-i18n="lang_label">UI Language</label>
+        <div class="menu" id="langMenu">
+          <button class="menu-trigger" id="langMenuTrigger" type="button" aria-haspopup="true" aria-expanded="false" aria-labelledby="langMenuLabel langMenuTriggerText">
+            <span id="langMenuTriggerText">日本語</span>
+          </button>
+          <div class="menu-list" id="langMenuList" role="menu">
+            <button class="menu-option active" type="button" role="menuitemradio" aria-checked="true" data-lang="ja" data-i18n="lang_name_ja">日本語</button>
+            <button class="menu-option" type="button" role="menuitemradio" aria-checked="false" data-lang="en" data-i18n="lang_name_en">English</button>
+          </div>
+        </div>
       </div>
 
       <div class="group">
@@ -403,14 +466,19 @@
       </div>
 
       <div class="group">
-        <label for="previewMode" data-i18n="mode_label">テーマエミュレーション</label>
-        <select id="previewMode">
-          <option value="system" data-i18n="mode_system">システム準拠</option>
-          <option value="light" data-i18n="mode_light">ライト</option>
-          <option value="dark" data-i18n="mode_dark">ダーク</option>
-          <option value="hc-light" data-i18n="mode_hc_light">ハイコントラスト（ライト）</option>
-          <option value="hc-dark" data-i18n="mode_hc_dark">ハイコントラスト（ダーク）</option>
-        </select>
+        <label id="modeMenuLabel" data-i18n="mode_label">テーマエミュレーション</label>
+        <div class="menu" id="modeMenu">
+          <button class="menu-trigger" id="modeMenuTrigger" type="button" aria-haspopup="true" aria-expanded="false" aria-labelledby="modeMenuLabel modeMenuTriggerText">
+            <span id="modeMenuTriggerText" data-i18n="mode_system">ステム準拠</span>
+          </button>
+          <div class="menu-list" id="modeMenuList" role="menu">
+            <button class="menu-option active" type="button" role="menuitemradio" aria-checked="true" data-mode="system" data-i18n="mode_system">システム準拠</button>
+            <button class="menu-option" type="button" role="menuitemradio" aria-checked="false" data-mode="light" data-i18n="mode_light">ライト</button>
+            <button class="menu-option" type="button" role="menuitemradio" aria-checked="false" data-mode="dark" data-i18n="mode_dark">ダーク</button>
+            <button class="menu-option" type="button" role="menuitemradio" aria-checked="false" data-mode="hc-light" data-i18n="mode_hc_light">ハイコントラスト（ライト）</button>
+            <button class="menu-option" type="button" role="menuitemradio" aria-checked="false" data-mode="hc-dark" data-i18n="mode_hc_dark">ハイコントラスト（ダーク）</button>
+          </div>
+        </div>
       </div>
 
       <div class="group">
@@ -473,6 +541,8 @@
           app_title: 'ThemeGen',
           app_desc: 'Fluent Design + 穏やかな緑テーマ。プレビューでテーマを擬似再現できます。',
           lang_label: 'UI言語',
+          lang_name_ja: '日本語',
+          lang_name_en: '英語',
           accent_label: 'アクセントカラー（緑）',
           mode_label: 'テーマエミュレーション',
           mode_system: 'システム準拠',
@@ -500,6 +570,8 @@
           app_title: 'ThemeGen',
           app_desc: 'Fluent Design with a soft green theme. You can emulate modes in the preview.',
           lang_label: 'UI Language',
+          lang_name_ja: 'Japanese',
+          lang_name_en: 'English',
           accent_label: 'Accent color (green)',
           mode_label: 'Theme emulation',
           mode_system: 'System',
@@ -529,8 +601,12 @@
       const preview = document.getElementById('preview');
       const previewHost = document.getElementById('previewHost');
       const picker = document.getElementById('accentPicker');
-      const mode = document.getElementById('previewMode');
-      const langSelect = document.getElementById('langSelect');
+      const langMenu = document.getElementById('langMenu');
+      const langMenuTrigger = document.getElementById('langMenuTrigger');
+      const langMenuTriggerText = document.getElementById('langMenuTriggerText');
+      const modeMenu = document.getElementById('modeMenu');
+      const modeMenuTrigger = document.getElementById('modeMenuTrigger');
+      const modeMenuTriggerText = document.getElementById('modeMenuTriggerText');
       const panelLabel = document.getElementById('panelLabel');
       const previewWrapLabel = document.getElementById('previewWrapLabel');
       const sizeGroup = document.getElementById('sizeGroup');
@@ -572,6 +648,9 @@
         if (value === 'dark') preview.classList.add('emu-dark');
         if (value === 'hc-light') preview.classList.add('emu-hc-light');
         if (value === 'hc-dark') preview.classList.add('emu-hc-dark');
+
+        const selected = modeMenu.querySelector(`[data-mode="${value}"]`);
+        if (selected) modeMenuTriggerText.textContent = selected.textContent;
       }
 
       function setSize(size) {
@@ -580,9 +659,50 @@
         if (size === 'mobile') previewHost.style.width = '390px';
       }
 
+      function toggleMenu(menu, trigger, force) {
+        const open = force !== undefined ? force : !menu.classList.contains('open');
+        menu.classList.toggle('open', open);
+        trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+
+      function setActiveOption(menu, selector, attrName, value) {
+        menu.querySelectorAll(selector).forEach((btn) => {
+          const active = btn.dataset[attrName] === value;
+          btn.classList.toggle('active', active);
+          btn.setAttribute('aria-checked', active ? 'true' : 'false');
+        });
+      }
+
       picker.addEventListener('input', (e) => applyAccent(e.target.value));
-      mode.addEventListener('change', (e) => applyMode(e.target.value));
-      langSelect.addEventListener('change', (e) => setLanguage(e.target.value));
+
+      langMenuTrigger.addEventListener('click', () => toggleMenu(langMenu, langMenuTrigger));
+      modeMenuTrigger.addEventListener('click', () => toggleMenu(modeMenu, modeMenuTrigger));
+
+      langMenu.querySelectorAll('[data-lang]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const lang = btn.dataset.lang;
+          setLanguage(lang);
+          setActiveOption(langMenu, '[data-lang]', 'lang', lang);
+          langMenuTriggerText.textContent = btn.textContent;
+          toggleMenu(langMenu, langMenuTrigger, false);
+        });
+      });
+
+      modeMenu.querySelectorAll('[data-mode]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const value = btn.dataset.mode;
+          applyMode(value);
+          setActiveOption(modeMenu, '[data-mode]', 'mode', value);
+          modeMenuTriggerText.textContent = btn.textContent;
+          toggleMenu(modeMenu, modeMenuTrigger, false);
+        });
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!langMenu.contains(event.target)) toggleMenu(langMenu, langMenuTrigger, false);
+        if (!modeMenu.contains(event.target)) toggleMenu(modeMenu, modeMenuTrigger, false);
+      });
+
       document.querySelectorAll('.chip').forEach((chip) => {
         chip.addEventListener('click', () => setSize(chip.dataset.size));
       });
@@ -600,6 +720,8 @@
       });
 
       setLanguage('ja');
+      langMenuTriggerText.textContent = i18n.ja.lang_name_ja;
+      applyMode('system');
       applyAccent(picker.value);
     })();
   </script>
