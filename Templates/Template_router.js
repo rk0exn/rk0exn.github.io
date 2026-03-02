@@ -1,5 +1,5 @@
-const PAGES        = new Set(['pageName']);
-const DEFAULT_PAGE = 'pageName';
+const PAGES        = new Set(['Template']);
+const DEFAULT_PAGE = 'Template';
 const SITE_TITLE   = 'n0xa.f5.si - TemplateHost';
 
 const mainContent = document.getElementById('mainContent');

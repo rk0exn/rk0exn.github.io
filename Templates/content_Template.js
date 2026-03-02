@@ -1,5 +1,5 @@
 export default {
-    title: 'ページ名',
+    title: 'テンプレート例',
     html: /* html */`
 <div class="intro-container">
     <p>ここにコンテンツを配置...</p>
