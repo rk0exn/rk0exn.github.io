@@ -1,4 +1,4 @@
-const PAGES        = new Set(['Template']);
+const PAGES        = new Set(['Template', 'page2']);
 const DEFAULT_PAGE = 'Template';
 const SITE_TITLE   = 'n0xa.f5.si - TemplateHost';
 
