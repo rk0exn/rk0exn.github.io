@@ -10,6 +10,11 @@
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     <title>n0xa.f5.si</title>
     <link rel="stylesheet" href="./global.css">
+    <script>
+        if (/MSHTA/i.test(navigator.userAgent)) {
+            document.documentElement.classList.add('is-mshta');
+        }
+    </script>
 </head>
 
 <body>
@@ -49,27 +54,63 @@
 
     <div class="fallback-overlay" id="fallbackOverlay" hidden>
         <div class="intro-container fallback-container">
-            <h1>⚠️ このブラウザには対応していません</h1>
-            <p>このサイトはInternet Explorerおよびレガシーブラウザに対応していません。</p>
-            <p>また、JavaScriptが無効になっている場合も正しく表示されません。</p>
-            <p>以下のいずれかをご利用ください。</p>
-            <ul>
-                <li>Microsoft Edge（最新版）</li>
-                <li>Google Chrome（最新版）</li>
-                <li>Mozilla Firefox（最新版）</li>
-                <li>Apple Safari（最新版）</li>
-            </ul>
+            <h1 id="fallbackTitle">⚠️ このブラウザには対応していません</h1>
+            <p id="fallbackDesc"></p>
+            <p id="fallbackDesc2"></p>
+            <ul id="fallbackList"></ul>
         </div>
     </div>
 
     <noscript>
         <style>.fallback-overlay { display: flex !important; }</style>
+        <div class="fallback-overlay" style="display:flex">
+            <div class="intro-container fallback-container">
+                <h1>⚠️ JavaScriptが無効です</h1>
+                <p>このサイトの表示にはJavaScriptが必要です。</p>
+                <p>ブラウザの設定からJavaScriptを有効にしてください。</p>
+            </div>
+        </div>
     </noscript>
 
     <script type="module" src="./router.js"></script>
 
     <script nomodule>
         document.getElementById('fallbackOverlay').hidden = false;
+    </script>
+
+    <script>
+        (function () {
+            const overlay  = document.getElementById('fallbackOverlay');
+            const title    = document.getElementById('fallbackTitle');
+            const desc     = document.getElementById('fallbackDesc');
+            const desc2    = document.getElementById('fallbackDesc2');
+            const list     = document.getElementById('fallbackList');
+            const browsers = ['Microsoft Edge（最新版）', 'Google Chrome（最新版）', 'Mozilla Firefox（最新版）', 'Apple Safari（最新版）'];
+
+            function showFallback(titleText, d1, d2, items) {
+                title.textContent  = titleText;
+                desc.textContent   = d1;
+                desc2.textContent  = d2;
+                list.innerHTML     = items.map(s => `<li>${s}</li>`).join('');
+                overlay.hidden     = false;
+            }
+
+            if (document.documentElement.classList.contains('is-mshta')) {
+                showFallback(
+                    '⛔ アクセスが拒否されました',
+                    'MSHTAからのアクセスはセキュリティ上の理由によりブロックされています。',
+                    'このサイトを閲覧するには通常のWebブラウザをご利用ください。',
+                    browsers
+                );
+            } else if (document.documentElement.classList.contains('is-legacy-browser')) {
+                showFallback(
+                    '⚠️ このブラウザには対応していません',
+                    'このサイトはInternet Explorerおよびレガシーブラウザに対応していません。',
+                    '以下のいずれかのブラウザをご利用ください。',
+                    browsers
+                );
+            }
+        })();
     </script>
 </body>
 
