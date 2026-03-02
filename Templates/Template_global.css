@@ -1,5 +1,14 @@
 @charset "UTF-8";
 
+/*
+ * template_global.css
+ * SPA テンプレートスタイル（global.css 相当）
+ *
+ * カスタマイズ箇所:
+ *   ライト: --accent / --accent-light / --accent-subtle
+ *   ダーク:  同上（@media prefers-color-scheme: dark 内）
+ */
+
 html, body {
     width: 100%;
     overflow-x: hidden;
@@ -8,16 +17,17 @@ html, body {
     padding: 0;
 }
 
+/* ── ライトテーマ ── */
 :root {
     color-scheme: light dark;
 
-    --accent:        #0067c0;
-    --accent-light:  #60b0f4;
-    --accent-subtle: rgba(0, 103, 192, 0.12);
+    /* ▼ ページごとに差し替えるアクセントカラー */
+    --accent:        #cc0000;
+    --accent-light:  #ff4444;
+    --accent-subtle: rgba(204, 0, 0, 0.10);
 
     --bg-mica:       #f3f3f3;
     --bg-layer:      rgba(255, 255, 255, 0.72);
-    --bg-layer2:     rgba(255, 255, 255, 0.55);
     --stroke:        rgba(0, 0, 0, 0.08);
     --stroke-strong: rgba(0, 0, 0, 0.16);
     --text:          #1a1a1a;
@@ -33,15 +43,16 @@ html, body {
     --radius-sm:     4px;
 }
 
+/* ── ダークテーマ ── */
 @media (prefers-color-scheme: dark) {
     :root {
-        --accent:        #60b0f4;
-        --accent-light:  #9cd0ff;
-        --accent-subtle: rgba(96, 176, 244, 0.14);
+        /* ▼ ページごとに差し替えるアクセントカラー（ダーク用） */
+        --accent:        #ff4444;
+        --accent-light:  #ff8888;
+        --accent-subtle: rgba(255, 68, 68, 0.14);
 
         --bg-mica:       #202020;
         --bg-layer:      rgba(44, 44, 44, 0.78);
-        --bg-layer2:     rgba(56, 56, 56, 0.60);
         --stroke:        rgba(255, 255, 255, 0.08);
         --stroke-strong: rgba(255, 255, 255, 0.14);
         --text:          #f0f0f0;
@@ -71,216 +82,6 @@ body {
     min-height: 100vh;
     box-sizing: border-box;
     transition: background-color 0.25s ease, color 0.25s ease;
-}
-
-/* ───── メインカード ───── */
-.intro-container {
-    background: var(--bg-layer);
-    backdrop-filter: blur(32px) saturate(1.8);
-    -webkit-backdrop-filter: blur(32px) saturate(1.8);
-    border-radius: var(--radius);
-    border: 1px solid var(--stroke);
-    box-shadow: var(--shadow-card);
-    max-width: 760px;
-    width: calc(100% - 40px);
-    margin: 24px auto;
-    padding: 28px 32px;
-    box-sizing: border-box;
-    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-/* ───── 見出し ───── */
-h1 {
-    color: var(--text);
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0 0 12px;
-    letter-spacing: -0.01em;
-    transition: color 0.25s ease;
-}
-
-h2 {
-    color: var(--text);
-    font-size: 15px;
-    font-weight: 600;
-    margin: 20px 0 8px;
-    transition: color 0.25s ease;
-}
-
-/* ───── テキスト ───── */
-p {
-    color: var(--text-sec);
-    margin: 8px 0;
-    font-size: 13.5px;
-}
-
-p strong {
-    color: var(--text);
-    font-weight: 500;
-}
-
-/* ───── リスト ───── */
-ul {
-    padding-left: 1.4em;
-    margin: 8px 0 12px;
-    color: var(--text-sec);
-    font-size: 13.5px;
-}
-
-ul li {
-    margin: 4px 0;
-    line-height: 1.6;
-}
-
-ul strong {
-    color: var(--text);
-    font-weight: 500;
-}
-
-/* ───── アクセントライン (カード左境界) ───── */
-.intro-container::before {
-    content: '';
-    display: block;
-    width: 3px;
-    height: calc(100% - 48px);
-    background: var(--accent);
-    border-radius: 2px;
-    position: absolute;
-    left: 0;
-    top: 24px;
-    opacity: 0.75;
-    pointer-events: none;
-}
-
-.intro-container {
-    position: relative;
-    overflow: hidden;
-}
-
-/* ───── リンク (Fluent HyperlinkButton風) ───── */
-a {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    color: var(--accent);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 4px 8px;
-    margin: 2px 4px 2px 0;
-    border-radius: var(--radius-sm);
-    transition: background 0.15s ease, color 0.15s ease;
-    position: relative;
-}
-
-a::after {
-    content: '→';
-    font-size: 11px;
-    opacity: 0.7;
-    transition: transform 0.15s ease, opacity 0.15s ease;
-}
-
-a:hover {
-    background: var(--accent-subtle);
-    color: var(--accent-light);
-}
-
-a:hover::after {
-    transform: translateX(2px);
-    opacity: 1;
-}
-
-a:active {
-    background: var(--fill-press);
-}
-
-/* ───── アイコン ───── */
-.icon {
-    font-size: 2em;
-    margin-bottom: 8px;
-    display: block;
-}
-
-/* ───── プロフィールリンク (index.css相当) ───── */
-.profile-links-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 8px;
-    margin: 10px 0;
-}
-
-.profile-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    background: var(--bg-layer2);
-    border: 1px solid var(--stroke);
-    border-radius: var(--radius-sm);
-    padding: 8px 12px;
-    color: var(--text);
-    font-size: 13px;
-    font-weight: 400;
-    transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.profile-link::after {
-    content: none;
-}
-
-.profile-link img {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    object-fit: cover;
-}
-
-.profile-link span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.profile-link:hover {
-    background: var(--fill-hover);
-    border-color: var(--accent);
-    box-shadow: 0 0 0 1px var(--accent-subtle);
-    color: var(--accent);
-}
-
-img {
-    border-radius: 8px;
-}
-
-img:not([src]),
-img[src=""],
-img[src="null"],
-img[src="undefined"],
-img[src="./null.png"] {
-    border: 1px solid var(--stroke);
-}
-
-/* ───── フッター ───── */
-.footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background: var(--footer-bg);
-    backdrop-filter: blur(24px) saturate(1.5);
-    -webkit-backdrop-filter: blur(24px) saturate(1.5);
-    border-top: 1px solid var(--stroke);
-    color: var(--footer-text);
-    text-align: center;
-    padding: 12px 0;
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    z-index: 100;
-    box-sizing: border-box;
-    transition: background 0.25s ease, color 0.25s ease;
 }
 
 /* ───── Navbar ───── */
@@ -418,6 +219,25 @@ img[src="./null.png"] {
     transform: translateY(-6.5px) rotate(-45deg);
 }
 
+/* ───── メインカード ───── */
+.intro-container {
+    position: relative;
+    overflow: hidden;
+    animation: pageFadeIn 0.22s ease forwards;
+    background: var(--bg-layer);
+    backdrop-filter: blur(32px) saturate(1.8);
+    -webkit-backdrop-filter: blur(32px) saturate(1.8);
+    border-radius: var(--radius);
+    border: 1px solid var(--stroke);
+    box-shadow: var(--shadow-card);
+    max-width: 760px;
+    width: calc(100% - 40px);
+    margin: 24px auto;
+    padding: 28px 32px;
+    box-sizing: border-box;
+    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
 /* ───── メインコンテンツ領域 ───── */
 .main-content {
     padding: 72px 20px 100px;
@@ -428,10 +248,6 @@ img[src="./null.png"] {
 @keyframes pageFadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
-}
-
-.intro-container {
-    animation: pageFadeIn 0.22s ease forwards;
 }
 
 /* ───── ローダー ───── */
@@ -455,6 +271,26 @@ img[src="./null.png"] {
     border-top-color: var(--accent);
     border-radius: 50%;
     animation: spin 0.7s linear infinite;
+}
+
+/* ───── フッター ───── */
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: var(--footer-bg);
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    border-top: 1px solid var(--stroke);
+    color: var(--footer-text);
+    text-align: center;
+    padding: 12px 0;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    z-index: 100;
+    box-sizing: border-box;
+    transition: background 0.25s ease, color 0.25s ease;
 }
 
 /* ───── レスポンシブ ───── */
@@ -495,8 +331,126 @@ img[src="./null.png"] {
 
     h1 { font-size: 17px; }
     h2 { font-size: 14px; }
-
-    .profile-links-container {
-        grid-template-columns: 1fr;
-    }
 }
+.intro-container::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: calc(100% - 48px);
+    background: var(--accent);
+    border-radius: 2px;
+    position: absolute;
+    left: 0;
+    top: 24px;
+    opacity: 0.75;
+    pointer-events: none;
+}
+
+/* ───── 見出し ───── */
+h1 {
+    color: var(--text);
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+    transition: color 0.25s ease;
+}
+
+h2 {
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 600;
+    margin: 20px 0 8px;
+    transition: color 0.25s ease;
+}
+
+/* ───── テキスト ───── */
+p {
+    color: var(--text-sec);
+    margin: 8px 0;
+    font-size: 13.5px;
+}
+
+p strong {
+    color: var(--text);
+    font-weight: 500;
+}
+
+/* ───── リスト ───── */
+ul {
+    padding-left: 1.4em;
+    margin: 8px 0 12px;
+    color: var(--text-sec);
+    font-size: 13.5px;
+}
+
+ul li {
+    margin: 4px 0;
+    line-height: 1.6;
+}
+
+ul strong {
+    color: var(--text);
+    font-weight: 500;
+}
+
+/* ───── リンク ───── */
+a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 8px;
+    margin: 2px 4px 2px 0;
+    border-radius: var(--radius-sm);
+    transition: background 0.15s ease, color 0.15s ease;
+    position: relative;
+}
+
+a::after {
+    content: '→';
+    font-size: 11px;
+    opacity: 0.7;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+a:hover {
+    background: var(--accent-subtle);
+    color: var(--accent-light);
+}
+
+a:hover::after {
+    transform: translateX(2px);
+    opacity: 1;
+}
+
+a:active {
+    background: var(--fill-press);
+}
+
+/* ───── フッター ───── */
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    /* ▼ グラデのセカンダリカラーをページごとに変えてもよい */
+    background: var(--footer-bg);
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    border-top: 1px solid var(--stroke);
+    color: var(--footer-text);
+    text-align: center;
+    padding: 12px 0;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    z-index: 100;
+    box-sizing: border-box;
+    transition: background 0.25s ease, color 0.25s ease;
+}
+
+/* ───── レスポンシブ ───── */
+
