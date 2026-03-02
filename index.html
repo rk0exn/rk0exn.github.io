@@ -42,7 +42,35 @@
         Copyright (c) 2025 - 2026 rk0exn All rights reserved.
     </footer>
 
+    <!-- IE検出: type="module"非対応ブラウザでのみ実行される -->
+    <script nomodule>
+        document.documentElement.classList.add('is-legacy-browser');
+    </script>
+
+    <div class="fallback-overlay" id="fallbackOverlay" hidden>
+        <div class="intro-container fallback-container">
+            <h1>⚠️ このブラウザには対応していません</h1>
+            <p>このサイトはInternet Explorerおよびレガシーブラウザに対応していません。</p>
+            <p>また、JavaScriptが無効になっている場合も正しく表示されません。</p>
+            <p>以下のいずれかをご利用ください。</p>
+            <ul>
+                <li>Microsoft Edge（最新版）</li>
+                <li>Google Chrome（最新版）</li>
+                <li>Mozilla Firefox（最新版）</li>
+                <li>Apple Safari（最新版）</li>
+            </ul>
+        </div>
+    </div>
+
+    <noscript>
+        <style>.fallback-overlay { display: flex !important; }</style>
+    </noscript>
+
     <script type="module" src="./router.js"></script>
+
+    <script nomodule>
+        document.getElementById('fallbackOverlay').hidden = false;
+    </script>
 </body>
 
 </html>
