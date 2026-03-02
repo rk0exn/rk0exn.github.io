@@ -67,6 +67,112 @@ html, body {
     }
 }
 
+/* ───── ハイコントラスト ライト ───── */
+/* ▼ --accent は赤系のまま維持、視認性のため彩度を落とす */
+@media (prefers-contrast: more) {
+    :root {
+        --accent:        #990000;
+        --accent-light:  #990000;
+        --accent-subtle: transparent;
+
+        --bg-mica:       #ffffff;
+        --bg-layer:      #ffffff;
+        --bg-layer2:     #f0f0f0;
+        --stroke:        #000000;
+        --stroke-strong: #000000;
+        --text:          #000000;
+        --text-sec:      #000000;
+        --fill-hover:    #e0e0e0;
+        --fill-press:    #c8c8c8;
+
+        --footer-bg:     #ffffff;
+        --footer-text:   #000000;
+
+        --shadow-card:   none;
+    }
+
+    body {
+        background-image: none;
+    }
+
+    .intro-container,
+    .navbar,
+    .footer {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    .intro-container {
+        border-width: 2px;
+        border-color: #000000;
+    }
+
+    .intro-container::before {
+        opacity: 1;
+    }
+
+    .nav-link.active::before {
+        height: 3px;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
+/* ───── ハイコントラスト ダーク ───── */
+@media (prefers-color-scheme: dark) and (prefers-contrast: more) {
+    :root {
+        /* ▼ ダークHCでは明るい赤に */
+        --accent:        #ff6666;
+        --accent-light:  #ff6666;
+        --accent-subtle: transparent;
+
+        --bg-mica:       #000000;
+        --bg-layer:      #000000;
+        --bg-layer2:     #1a1a1a;
+        --stroke:        #ffffff;
+        --stroke-strong: #ffffff;
+        --text:          #ffffff;
+        --text-sec:      #ffffff;
+        --fill-hover:    #2a2a2a;
+        --fill-press:    #3a3a3a;
+
+        --footer-bg:     #000000;
+        --footer-text:   #ffffff;
+
+        --shadow-card:   none;
+    }
+
+    body {
+        background-image: none;
+    }
+
+    .intro-container,
+    .navbar,
+    .footer {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    .intro-container {
+        border-width: 2px;
+        border-color: #ffffff;
+    }
+
+    .intro-container::before {
+        opacity: 1;
+    }
+
+    .nav-link.active::before {
+        height: 3px;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
 body {
     user-select: none;
     background-color: var(--bg-mica);
