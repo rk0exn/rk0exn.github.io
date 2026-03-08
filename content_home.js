@@ -32,6 +32,9 @@ export default {
         <a href="https://wsn0672.jp" target="_blank" class="profile-link">
             <img src="https://www.google.com/s2/favicons?domain=wsn0672.jp&sz=256" alt=""><span>wsn0672</span>
         </a>
+        <a href="https://profile.tatsut.jp" target="_blank" class="profile-link">
+            <img src="https://profile.tatsut.jp/tatsu.png" alt=""><span>tatsut</span>
+        </a>
         <a href="https://0x5.f5.si" target="_blank" class="profile-link">
             <img src="https://0x5.f5.si/favicon.ico" alt=""><span>0x5</span>
         </a>
