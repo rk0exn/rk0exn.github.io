@@ -30,7 +30,7 @@ export default {
             <img src="https://kzng.f5.si/favicon.ico" alt=""><span>風止渚</span>
         </a>
         <a href="https://wsn0672.jp" target="_blank" class="profile-link">
-            <img src="https://wsn0672.jp/favicon.png" alt=""><span>wsn0672</span>
+            <img src="https://www.google.com/s2/favicons?domain=wsn0672.jp&sz=256" alt=""><span>wsn0672</span>
         </a>
         <a href="https://0x5.f5.si" target="_blank" class="profile-link">
             <img src="https://0x5.f5.si/favicon.ico" alt=""><span>0x5</span>
