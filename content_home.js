@@ -5,7 +5,7 @@ export default {
     <div class="icon">👋</div>
     <p>はじめまして！</p>
     <ul>
-        <li>名前：<strong>はぅ</strong></li>
+        <li>名前：<strong>rk0exn</strong></li>
         <li>趣味：<strong>プログラミング(特にC#)</strong></li>
         <li>好きなこと：<strong>コードを書く(雑かつ中途半端)</strong></li>
         <li>よく分からん一言：<strong>役に立てるようなことはあったりなかったり</strong></li>
