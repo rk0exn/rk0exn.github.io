@@ -35,6 +35,9 @@ export default {
         <a href="https://profile.tatsut.jp" target="_blank" class="profile-link">
             <img src="https://profile.tatsut.jp/tatsu.png" alt=""><span>tatsut</span>
         </a>
+        <a href="https://kirea.jp" target="_blank" class="profile-link">
+            <img src="./null.png" alt=""><span>Kirea</span>
+        </a>
         <a href="https://0x5.f5.si" target="_blank" class="profile-link">
             <img src="https://0x5.f5.si/favicon.ico" alt=""><span>0x5</span>
         </a>
