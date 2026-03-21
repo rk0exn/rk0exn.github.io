@@ -1,4 +1,4 @@
-const PAGES        = new Set(['home', 'ttvmin', 'ttvedit', 'noiser', 'dwmrun', 'LMeXS']);
+const PAGES        = new Set(['home', 'ttvmin', 'ttvedit', 'noiser', 'dwmrun', 'MemStressKit']);
 const DEFAULT_PAGE = 'home';
 const SITE_TITLE   = 'n0xa.f5.si';
 
