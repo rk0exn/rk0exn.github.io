@@ -12,7 +12,7 @@ export default {
         <li>ノイズはVHS風の横シマ型のノイズにしてみました(弱いけど)</li>
     </ul>
     <p>開発完了したのでアーカイブです...</p>
-    <p>最終バージョンはv1.2.2です！</p>
+    <p>最終バージョンはv1.3.1_Finalです！</p>
     <a href="https://github.com/rk0exn/noiser/" target="_blank">リポジトリはこちら</a>
 </div>
 `,
