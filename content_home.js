@@ -14,9 +14,6 @@ export default {
     <a href="https://github.com/rk0exn" target="_blank">GitHub</a>
     <h2>相互リンクなど一覧</h2>
     <div class="profile-links-container">
-        <a href="https://profile.activetk.jp" target="_blank" class="profile-link">
-            <img src="https://www.activetk.jp/icon/index_150_150.ico" alt=""><span>ActiveTK</span>
-        </a>
         <a href="https://yana-lp.f5.si" target="_blank" class="profile-link">
             <img src="https://yana-lp.f5.si/icons/favicon.ico" alt=""><span>やなぎ</span>
         </a>
