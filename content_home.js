@@ -3,17 +3,20 @@ export default {
     html: /* html */`
 <div class="intro-container">
     <div class="icon">👋</div>
-    <p>はじめまして！</p>
+    <p>やっほー！</p>
     <ul>
         <li>名前：<strong>rk0exn</strong></li>
-        <li>趣味：<strong>プログラミング(特にC#)</strong></li>
-        <li>好きなこと：<strong>コードを書く(雑かつ中途半端)</strong></li>
-        <li>よく分からん一言：<strong>役に立てるようなことはあったりなかったり</strong></li>
+        <li>趣味：プログラミング(特に<strong>C#/XAML、Win32</strong>)</li>
+        <li>好きなこと：コードを書く(雑かつ中途半端)</li>
+        <li>一言：役に立てるようなことはあるかもしれません...！</li>
     </ul>
-    <p>こんな人ですが、どうぞよろしくお願いします！</p>
+    <p>こんな人ですが、どうぞよろしくお願いいたします！</p>
     <a href="https://github.com/rk0exn" target="_blank">GitHub</a>
     <h2>相互リンクなど一覧</h2>
     <div class="profile-links-container">
+        <a href="https://nanasi-rasi.net" target="_blank" class="profile-link">
+            <img src="https://nanasi-rasi.net/favicon.ico" alt=""><span>ななしぃ</span>
+        </a>
         <a href="https://yana-lp.f5.si" target="_blank" class="profile-link">
             <img src="https://yana-lp.f5.si/icons/favicon.ico" alt=""><span>やなぎ</span>
         </a>
