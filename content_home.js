@@ -12,6 +12,7 @@ export default {
     </ul>
     <p>こんな人ですが、どうぞよろしくお願いいたします！</p>
     <a href="https://github.com/rk0exn" target="_blank">GitHub</a>
+    <a href="https://x.com/ik_llmyself" target="_blank">X (旧Twitter)</a>
     <h2>相互リンクなど一覧</h2>
     <div class="profile-links-container">
         <a href="https://nanasi-rasi.net" target="_blank" class="profile-link">
