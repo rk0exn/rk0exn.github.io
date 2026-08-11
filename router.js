@@ -33,7 +33,10 @@ function setActiveNav(page) {
 }
 
 async function loadPage(page) {
-    if (!PAGES.has(page)) page = DEFAULT_PAGE;
+    if (!PAGES.has(page)) {
+        location.hash = `#${DEFAULT_PAGE}`;
+        page = DEFAULT_PAGE;
+    }
 
     showLoader();
     setActiveNav(page);
