@@ -1,5 +1,7 @@
-const PAGES        = new Set(['home', 'noiser']);
-const DEFAULT_PAGE = 'home';
+const userLang = navigator.language || navigator.userLanguage || '';
+const isJapanese = userLang.toLowerCase().startsWith('ja');
+const DEFAULT_PAGE = isJapanese ? 'home' : 'home-en';
+const PAGES        = isJapanese ? new Set(['home', 'noiser']) : new Set(['home-en', 'noiser']);
 const SITE_TITLE   = 'n0xa.f5.si';
 
 const mainContent = document.getElementById('mainContent');
@@ -9,6 +11,12 @@ const hamburger   = document.getElementById('navHamburger');
 const navMenu     = document.getElementById('navLinks');
 
 const cache = new Map();
+
+if (!isJapanese) {
+    let home = document.getElementById('home');
+    document.getElementById('brandLink').href = home.href = "#home-en";
+    home.textContent = 'Home';
+}
 
 function showLoader() {
     mainContent.innerHTML = '';
@@ -38,7 +46,7 @@ async function loadPage(page) {
             mod = (await import(`./content_${page}.js`)).default;
             cache.set(page, mod);
         } catch (e) {
-            mod = { title: SITE_TITLE, html: `<div class="intro-container"><p>ページの読み込みに失敗しました。</p></div>` };
+            mod = isJapanese ? { title: SITE_TITLE, html: `<div class="intro-container"><p>ページの読み込みに失敗しました。</p></div>` } : { title: SITE_TITLE, html: `<div class="intro-container"><p>Failed to load page :(</p></div>` };
         }
     }
 
