@@ -7,7 +7,6 @@ export default {
     <ul>
         <li>Name: <strong>rk0exn</strong></li>
         <li>My hobby: Programming(<strong>C#/XAML and Win32</strong>)</li>
-        <li>Comment: Nice to meet you!</li>
     </ul>
     <p>Nice to meet you!</p>
     <a href="https://github.com/rk0exn" target="_blank">GitHub</a>
