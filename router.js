@@ -16,7 +16,7 @@ if (!isJapanese) {
     let home = document.getElementById('home');
     document.getElementById('brandLink').href = home.href = "#home-en";
     home.textContent = 'Home';
-    home.dataset = 'home-en';
+    home.dataset["page"] = 'home-en';
 }
 
 function showLoader() {
