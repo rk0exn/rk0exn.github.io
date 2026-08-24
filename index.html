@@ -31,8 +31,9 @@
         </button>
 
         <ul class="nav-links" id="navLinks" role="list">
-            <li><a href="#home"    class="nav-link" data-page="home" id="home">自己紹介</a></li>
-            <li><a href="#noiser"  class="nav-link" data-page="noiser">noiser</a></li>
+            <li><a href="#home"         class="nav-link" data-page="home" id="home">自己紹介</a></li>
+            <li><a href="#noiser"       class="nav-link" data-page="noiser">noiser</a></li>
+            <li><a href="#bsodMaker"    class="nav-link" data-page="bsodMaker">bsodMaker</a></li>
         </ul>
     </nav>
 
@@ -53,7 +54,7 @@
 
     <div class="fallback-overlay" id="fallbackOverlay" hidden>
         <div class="intro-container fallback-container">
-            <h1 id="fallbackTitle">⚠️ このブラウザには対応していません</h1>
+            <h1 id="fallbackTitle">⚠️ このブラウザには対応していません / This browser is not supported.</h1>
             <p id="fallbackDesc"></p>
             <p id="fallbackDesc2"></p>
             <ul id="fallbackList"></ul>
@@ -64,9 +65,9 @@
         <style>.fallback-overlay { display: flex !important; }</style>
         <div class="fallback-overlay" style="display:flex">
             <div class="intro-container fallback-container">
-                <h1>⚠️ JavaScriptが無効です</h1>
-                <p>このサイトの表示にはJavaScriptが必要です。</p>
-                <p>ブラウザの設定からJavaScriptを有効にしてください。</p>
+                <h1>⚠️ JavaScriptが無効です / JavaScript is disabled.</h1>
+                <p>このサイトの表示にはJavaScriptが必要です。 / This site requires JavaScript.</p>
+                <p>ブラウザの設定からJavaScriptを有効にしてください。 / Turn on JavaScript from your browser settings.</p>
             </div>
         </div>
     </noscript>
@@ -85,10 +86,10 @@
             var desc2   = document.getElementById('fallbackDesc2');
             var list    = document.getElementById('fallbackList');
             var browsers = [
-                'Microsoft Edge（最新版）',
-                'Google Chrome（最新版）',
-                'Mozilla Firefox（最新版）',
-                'Apple Safari（最新版）'
+                'Microsoft Edge（最新版 / Latest）',
+                'Google Chrome（最新版 / Latest）',
+                'Mozilla Firefox（最新版 / Latest）',
+                'Apple Safari（最新版 / Latest）'
             ];
 
             function showFallback(titleText, d1, d2, items) {
@@ -105,9 +106,9 @@
 
             if (document.documentElement.getAttribute('data-env') === 'legacy') {
                 showFallback(
-                    '⚠️ このブラウザには対応していません',
-                    'このサイトはInternet Explorerおよびレガシーブラウザに対応していません。',
-                    '以下のいずれかのブラウザをご利用ください。',
+                    '⚠️ このブラウザには対応していません / Not supported browser',
+                    'このサイトはInternet Explorerおよびレガシーブラウザに対応していません。 / This site is not supporting Internet Explorer and regacy browser.',
+                    '以下のいずれかのブラウザをご利用ください。 / Use these browsers:',
                     browsers
                 );
             }

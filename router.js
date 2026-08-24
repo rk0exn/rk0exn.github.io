@@ -1,7 +1,7 @@
 const userLang = navigator.language || navigator.userLanguage || '';
 const isJapanese = userLang.toLowerCase().startsWith('ja');
 const DEFAULT_PAGE = isJapanese ? 'home' : 'home-en';
-const PAGES        = isJapanese ? new Set(['home', 'noiser']) : new Set(['home-en', 'noiser']);
+const PAGES        = isJapanese ? new Set(['home', 'noiser', 'bsodMaker']) : new Set(['home-en', 'noiser', 'bsodMaker']);
 const SITE_TITLE   = 'n0xa.f5.si';
 
 const mainContent = document.getElementById('mainContent');
@@ -15,7 +15,7 @@ const cache = new Map();
 if (!isJapanese) {
     let home = document.getElementById('home');
     document.getElementById('brandLink').href = home.href = "#home-en";
-    home.textContent = 'Home';
+    home.textContent = 'Profile';
     home.dataset["page"] = 'home-en';
 }
 
@@ -47,8 +47,14 @@ async function loadPage(page) {
         mod = cache.get(page);
     } else {
         try {
-            mod = (await import(`./content_${page}.js`)).default;
-            cache.set(page, mod);
+            if (page === 'bsodMaker') {
+                window.location.replace("https://youtu.be/dQw4w9WgXcQ");
+                return;
+            }
+            else {
+                mod = (await import(`./content_${page}.js`)).default;
+                cache.set(page, mod);
+            }
         } catch (e) {
             mod = isJapanese ? { title: SITE_TITLE, html: `<div class="intro-container"><p>ページの読み込みに失敗しました。</p></div>` } : { title: SITE_TITLE, html: `<div class="intro-container"><p>Failed to load page :(</p></div>` };
         }
