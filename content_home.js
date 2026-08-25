@@ -40,7 +40,7 @@ export default {
             <img src="./null.png" alt=""><span>Kirea</span>
         </a>
         <a href="https://256server.com" target="_blank" class="profile-link">
-            <img src="https://256server.com/favicon.ico" alt=""><span>256/にごろ㌠㌨🈂‼🍣🍊4G◢.md📱🎌</span>
+            <img src="https://256server.com/favicon.ico" alt=""><span>256/にごろ㌠㌨🈂‼</span>
         </a>
         <a href="https://0x5.f5.si" target="_blank" class="profile-link">
             <img src="https://0x5.f5.si/favicon.ico" alt=""><span>0x5</span>
