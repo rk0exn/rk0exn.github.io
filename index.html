@@ -31,9 +31,10 @@
         </button>
 
         <ul class="nav-links" id="navLinks" role="list">
-            <li><a href="#home"         class="nav-link" data-page="home" id="home">自己紹介</a></li>
-            <li><a href="#noiser"       class="nav-link" data-page="noiser">noiser</a></li>
-            <li><a href="#bsodMaker"    class="nav-link" data-page="bsodMaker">bsodMaker</a></li>
+            <li><a href="#home" class="nav-link" data-page="home" id="home">自己紹介</a></li>
+            <li><a href="#noiser" class="nav-link" data-page="noiser">noiser</a></li>
+            <li><a href="#nanoreyo" class="nav-link" data-page="noiser">名乗れよ</a></li>
+            <li><a href="#bsodMaker" class="nav-link" data-page="bsodMaker">bsodMaker</a></li>
         </ul>
     </nav>
 
@@ -62,7 +63,11 @@
     </div>
 
     <noscript>
-        <style>.fallback-overlay { display: flex !important; }</style>
+        <style>
+            .fallback-overlay {
+                display: flex !important;
+            }
+        </style>
         <div class="fallback-overlay" style="display:flex">
             <div class="intro-container fallback-container">
                 <h1>⚠️ JavaScriptが無効です / JavaScript is disabled.</h1>
@@ -81,10 +86,10 @@
     <script>
         (function () {
             var overlay = document.getElementById('fallbackOverlay');
-            var title   = document.getElementById('fallbackTitle');
-            var desc    = document.getElementById('fallbackDesc');
-            var desc2   = document.getElementById('fallbackDesc2');
-            var list    = document.getElementById('fallbackList');
+            var title = document.getElementById('fallbackTitle');
+            var desc = document.getElementById('fallbackDesc');
+            var desc2 = document.getElementById('fallbackDesc2');
+            var list = document.getElementById('fallbackList');
             var browsers = [
                 'Microsoft Edge（最新版 / Latest）',
                 'Google Chrome（最新版 / Latest）',
@@ -94,7 +99,7 @@
 
             function showFallback(titleText, d1, d2, items) {
                 title.textContent = titleText;
-                desc.textContent  = d1;
+                desc.textContent = d1;
                 desc2.textContent = d2;
                 var html = '';
                 for (var i = 0; i < items.length; i++) {
