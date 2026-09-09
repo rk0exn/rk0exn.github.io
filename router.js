@@ -1,7 +1,7 @@
 const userLang = navigator.language || navigator.userLanguage || '';
 const isJapanese = userLang.toLowerCase().startsWith('ja');
 const DEFAULT_PAGE = isJapanese ? 'home' : 'home-en';
-const PAGES        = isJapanese ? new Set(['home', 'noiser', 'bsodMaker']) : new Set(['home-en', 'noiser', 'bsodMaker']);
+const PAGES        = isJapanese ? new Set(['home', 'noiser', 'nanoreyo', 'bsodMaker']) : new Set(['home-en', 'noiser', 'nanoreyo', 'bsodMaker']);
 const SITE_TITLE   = 'n0xa.f5.si';
 
 const mainContent = document.getElementById('mainContent');
