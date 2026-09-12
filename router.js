@@ -48,7 +48,7 @@ async function loadPage(page) {
     } else {
         try {
             if (page === 'template') {
-                windows.location.href = 'https://n0xa.f5.si/Templates/TemplateHost.html';
+                window.location.href = '/Templates/TemplateHost';
                 return;
             }
             else if (page === 'bsodMaker') {
