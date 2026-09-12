@@ -1,8 +1,8 @@
 const userLang = navigator.language || navigator.userLanguage || '';
 const isJapanese = userLang.toLowerCase().startsWith('ja');
 const DEFAULT_PAGE = isJapanese ? 'home' : 'home-en';
-const PAGES        = isJapanese ? new Set(['home', 'noiser', 'template', 'bsodMaker']) : new Set(['home-en', 'noiser', 'template', 'bsodMaker']);
-const SITE_TITLE   = 'n0xa.f5.si';
+const PAGES        = new Set([DEFAULT_PAGE, 'noiser', 'template', 'bsodMaker']);
+const SITE_TITLE   = "Profile of (rk0exn / n0xa)";
 
 const mainContent = document.getElementById('mainContent');
 const pageLoader  = document.getElementById('pageLoader');
@@ -14,9 +14,9 @@ const cache = new Map();
 
 if (!isJapanese) {
     let home = document.getElementById('home');
-    document.getElementById('brandLink').href = home.href = "#home-en";
+    document.getElementById('brandLink').href = home.href = `#${DEFAULT_PAGE}`;
     home.textContent = 'Profile';
-    home.dataset["page"] = 'home-en';
+    home.dataset["page"] = DEFAULT_PAGE;
 }
 
 function showLoader() {
