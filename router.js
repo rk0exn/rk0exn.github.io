@@ -1,7 +1,7 @@
 const userLang = navigator.language || navigator.userLanguage || '';
 const isJapanese = userLang.toLowerCase().startsWith('ja');
 const DEFAULT_PAGE = isJapanese ? 'home' : 'home-en';
-const PAGES        = isJapanese ? new Set(['home', 'noiser', 'nanoreyo', 'bsodMaker']) : new Set(['home-en', 'noiser', 'nanoreyo', 'bsodMaker']);
+const PAGES        = isJapanese ? new Set(['home', 'noiser', 'template', 'bsodMaker']) : new Set(['home-en', 'noiser', 'template', 'bsodMaker']);
 const SITE_TITLE   = 'n0xa.f5.si';
 
 const mainContent = document.getElementById('mainContent');
@@ -47,7 +47,11 @@ async function loadPage(page) {
         mod = cache.get(page);
     } else {
         try {
-            if (page === 'bsodMaker') {
+            if (page === 'template') {
+                windows.location.href = '/Templates/TemplateHost.html';
+                return;
+            }
+            else if (page === 'bsodMaker') {
                 window.location.replace("https://youtu.be/dQw4w9WgXcQ");
                 return;
             }
