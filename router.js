@@ -48,11 +48,11 @@ async function loadPage(page) {
     } else {
         try {
             if (page === 'template') {
-                window.location.href = '/Templates/TemplateHost';
+                window.location.replace('/Templates/TemplateHost');
                 return;
             }
             else if (page === 'bsodMaker') {
-                window.location.replace("https://youtu.be/dQw4w9WgXcQ");
+                window.location.replace('https://youtu.be/dQw4w9WgXcQ');
                 return;
             }
             else {
