@@ -60,7 +60,7 @@ async function loadPage(page) {
                 cache.set(page, mod);
             }
         } catch (e) {
-            mod = isJapanese ? { title: SITE_TITLE, html: `<div class="intro-container"><p>ページの読み込みに失敗しました。</p></div>` } : { title: SITE_TITLE, html: `<div class="intro-container"><p>Failed to load page :(</p></div>` };
+            mod = { title: SITE_TITLE, html: `<div class="intro-container"><p>${isJapanese ? "ページの読み込みに失敗しました。" : "Failed to load page :("}</p></div>` };
         }
     }
 
