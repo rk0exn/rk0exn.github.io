@@ -1,7 +1,12 @@
 const userLang = navigator.language || navigator.userLanguage || '';
 const isJapanese = userLang.toLowerCase().startsWith('ja');
 const DEFAULT_PAGE = isJapanese ? 'home' : 'home-en';
-const PAGES        = new Set([DEFAULT_PAGE, 'noiser', 'template', 'bsodMaker']);
+const PAGES        = [
+    {id: DEFAULT_PAGE},
+    {id: 'noiser'},
+    {id: 'template', jump: '/Templates/TemplateHost'},
+    {id: 'bsodMaker', jump: 'https://youtu.be/dQw4w9WgXcQ'},
+];
 const SITE_TITLE   = "Profile of (rk0exn / n0xa)";
 
 const mainContent = document.getElementById('mainContent');
@@ -33,40 +38,73 @@ function setActiveNav(page) {
     navLinks.forEach(a => a.classList.toggle('active', a.dataset.page === page));
 }
 
+async function setHtmlWithScripts(element, html) {
+    element.innerHTML = html;
+
+    const scripts = [...element.querySelectorAll('script')];
+
+    for (const oldScript of scripts) {
+        const newScript = document.createElement('script');
+
+        for (const attr of oldScript.attributes)
+            newScript.setAttribute(attr.name, attr.value);
+
+        if (oldScript.src) {
+            await new Promise((resolve, reject) => {
+                newScript.onload = resolve;
+                newScript.onerror = reject;
+                oldScript.replaceWith(newScript);
+            });
+        } else {
+            newScript.textContent = oldScript.textContent;
+            oldScript.replaceWith(newScript);
+        }
+    }
+}
+
+function getPageInfo(id) {
+    return PAGES.find(p => p.id === id);
+}
+
 async function loadPage(page) {
-    if (!PAGES.has(page)) {
+    let pageInfo = getPageInfo(page);
+
+    if (!pageInfo) {
         location.hash = `#${DEFAULT_PAGE}`;
-        page = DEFAULT_PAGE;
+        pageInfo = getPageInfo(DEFAULT_PAGE);
     }
 
     showLoader();
-    setActiveNav(page);
+    setActiveNav(pageInfo.id);
+
+    if (pageInfo.jump) {
+        window.location.replace(pageInfo.jump);
+        return;
+    }
 
     let mod;
-    if (cache.has(page)) {
-        mod = cache.get(page);
+
+    if (cache.has(pageInfo.id)) {
+        mod = cache.get(pageInfo.id);
     } else {
         try {
-            if (page === 'template') {
-                window.location.replace('/Templates/TemplateHost');
-                return;
-            }
-            else if (page === 'bsodMaker') {
-                window.location.replace('https://youtu.be/dQw4w9WgXcQ');
-                return;
-            }
-            else {
-                mod = (await import(`./content_${page}.js`)).default;
-                cache.set(page, mod);
-            }
+            mod = (await import(`./content_${pageInfo.id}.js`)).default;
+            cache.set(pageInfo.id, mod);
         } catch (e) {
-            mod = { title: SITE_TITLE, html: `<div class="intro-container"><p>${isJapanese ? "ページの読み込みに失敗しました。" : "Failed to load page :("}</p></div>` };
+            mod = {
+                title: SITE_TITLE,
+                html: `<div class="intro-container"><p>${isJapanese ? "ページの読み込みに失敗しました。" : "Failed to load page :("}</p></div>`
+            };
         }
     }
 
     document.title = mod.title ? `${SITE_TITLE} - ${mod.title}` : SITE_TITLE;
     hideLoader();
-    mainContent.innerHTML = mod.html;
+    try {
+        await setHtmlWithScripts(mainContent, mod.html);
+    } catch (e) {
+        console.error('Failed to execute page scripts: ', e);
+    }
 }
 
 function getPage() {
