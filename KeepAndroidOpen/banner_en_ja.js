@@ -10,9 +10,6 @@
  *   lang=en       Force English
  *   id=myDiv      Insert the banner inside the element with this id
  *                 (default: prepend to <body>)
- *   size=normal   Banner size: "normal" (default), "mini" or "minimal"
- *   link=URL      Make the banner text a link
- *                 Set link=none to disable the link
  *   hidebutton=on Show an X close button (default: on)
  *                 Set hidebutton=off to hide the close button
  *   animation=on  Add animation to border of banner (default: on)
@@ -70,73 +67,15 @@
     navigator.userLanguage
   );
 
-  var size = params.size === "mini"
-    ? "mini"
-    : params.size === "minimal"
-      ? "minimal"
-      : "normal";
+  var size = "mini";
 
-  var linkParam = params.link;
-
-  var defaultLink = locale === "ja"
-    ? "https://keepandroidopen.org/ja/"
-    : "https://keepandroidopen.org";
-
-  var linkUrl = linkParam === "none"
-    ? null
-    : (linkParam || defaultLink);
+  var linkUrl = locale === "ja" ? "https://keepandroidopen.org/ja/" : "https://keepandroidopen.org/en/";
 
   var showClose = params.hidebutton !== "off";
   var storageKey = "kao-banner-hidden";
   var dismissDays = 30;
 
-  var cssNormal =
-    ".kao-banner{" +
-      "position:relative;" +
-      "font-variant-numeric:tabular-nums;" +
-      "background:linear-gradient(180deg,#d32f2f 0%,#b71c1c 100%);" +
-      "border-bottom:4px solid #801313;" +
-      "color:#fff;" +
-      "font-family:'Arial Black',sans-serif;" +
-      "font-weight:900;" +
-      "text-transform:uppercase;" +
-      "letter-spacing:2px;" +
-      "font-size:1.5rem;" +
-      "text-align:center;" +
-      "text-shadow:" +
-        "0px 1px 0px #9e1a1a," +
-        "0px 2px 0px #8a1515," +
-        "0px 3px 0px #751111," +
-        "0px 4px 0px #5e0d0d," +
-        "0px 6px 10px rgba(0,0,0,0.5);" +
-      "padding:0.5rem 2.5rem;" +
-      "line-height:1.6;" +
-      "box-sizing:border-box;" +
-    "}";
-
   var cssMini =
-    ".kao-banner{" +
-      "position:relative;" +
-      "font-variant-numeric:tabular-nums;" +
-      "background:linear-gradient(180deg,#d32f2f 0%,#b71c1c 100%);" +
-      "border-bottom:2px solid #801313;" +
-      "color:#fff;" +
-      "font-family:'Arial Black',sans-serif;" +
-      "font-weight:900;" +
-      "text-transform:uppercase;" +
-      "letter-spacing:1px;" +
-      "font-size:0.75rem;" +
-      "text-align:center;" +
-      "text-shadow:" +
-        "0px 1px 0px #9e1a1a," +
-        "0px 2px 0px #8a1515," +
-        "0px 3px 5px rgba(0,0,0,0.4);" +
-      "padding:0.25rem 1.5rem;" +
-      "line-height:1.4;" +
-      "box-sizing:border-box;" +
-    "}";
-
-  var cssMinimal =
     ".kao-banner{" +
       "position:relative;" +
       "font-variant-numeric:tabular-nums;" +
@@ -188,14 +127,7 @@
 
   var style = document.createElement("style");
 
-  style.textContent =
-    (size === "mini"
-      ? cssMini
-      : size === "minimal"
-        ? cssMinimal
-        : cssNormal) +
-    (params.animation === "off" ? "" : cssKaoPulse) +
-    cssCommon;
+  style.textContent = cssMini + (params.animation === "off" ? "" : cssKaoPulse) + cssCommon;
 
   document.head.appendChild(style);
 
@@ -216,9 +148,7 @@
 
   var banner = document.createElement("div");
 
-  banner.className = params.animation === "off"
-    ? "kao-banner no-animation"
-    : "kao-banner";
+  banner.className = params.animation === "off" ? "kao-banner no-animation" : "kao-banner";
 
   var messageText = messages[locale];
 
@@ -233,11 +163,7 @@
     banner.appendChild(document.createTextNode(messageText));
   }
 
-  if (params.size === "minimal") {
-    banner.appendChild(document.createTextNode("\u00A0"));
-  } else {
-    banner.appendChild(document.createElement("br"));
-  }
+  banner.appendChild(document.createElement("br"));
 
   var countdownSpan = document.createElement("span");
   countdownSpan.textContent = "\u00A0";

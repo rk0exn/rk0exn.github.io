@@ -50,7 +50,7 @@ export default {
     </div>
     <p>相互リンクなどは随時追加予定です...<br><strong>※アイコンが未設定の場合は表示されません。</strong></p>
 
-    <script src="https://n0xa.f5.si/KeepAndroidOpen/banner_en_ja.js?lang=ja&id=andriod-warn&size=mini&animation=off&hidebutton=off&link=https://keepandroidopen.org/ja/"></script>
+    <script src="/KeepAndroidOpen/banner_en_ja.js?id=andriod-warn&animation=off&hidebutton=off></script>
 </div>
 `,
 };
