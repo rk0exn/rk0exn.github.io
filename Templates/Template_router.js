@@ -1,4 +1,8 @@
-const PAGES        = new Set(['Template', 'page2']);
+const PAGES = [
+    { id: 'Template' },
+    { id: 'page2' },
+];
+
 const DEFAULT_PAGE = 'Template';
 const SITE_TITLE   = 'n0xa.f5.si - TemplateHost';
 
@@ -24,27 +28,70 @@ function setActiveNav(page) {
     navLinks.forEach(a => a.classList.toggle('active', a.dataset.page === page));
 }
 
+async function setHtmlWithScripts(element, html) {
+    element.innerHTML = html;
+
+    const scripts = [...element.querySelectorAll('script')];
+
+    for (const oldScript of scripts) {
+        const newScript = document.createElement('script');
+
+        for (const attr of oldScript.attributes)
+            newScript.setAttribute(attr.name, attr.value);
+
+        if (oldScript.src) {
+            await new Promise((resolve, reject) => {
+                newScript.onload = resolve;
+                newScript.onerror = reject;
+                oldScript.replaceWith(newScript);
+            });
+        } else {
+            newScript.textContent = oldScript.textContent;
+            oldScript.replaceWith(newScript);
+        }
+    }
+}
+
+function getPageInfo(id) {
+    return PAGES.find(p => p.id === id);
+}
+
 async function loadPage(page) {
-    if (!PAGES.has(page)) page = DEFAULT_PAGE;
+    let pageInfo = getPageInfo(page);
+
+    if (!pageInfo) {
+        location.hash = `#${DEFAULT_PAGE}`;
+        pageInfo = getPageInfo(DEFAULT_PAGE);
+    }
 
     showLoader();
-    setActiveNav(page);
+    setActiveNav(pageInfo.id);
+
+    if (pageInfo.jump) {
+        window.location.replace(pageInfo.jump);
+        return;
+    }
 
     let mod;
-    if (cache.has(page)) {
-        mod = cache.get(page);
+
+    if (cache.has(pageInfo.id)) {
+        mod = cache.get(pageInfo.id);
     } else {
         try {
-            mod = (await import(`./content_${page}.js`)).default;
-            cache.set(page, mod);
+            mod = (await import(`./content_${pageInfo.id}.js`)).default;
+            cache.set(pageInfo.id, mod);
         } catch (e) {
-            mod = { title: '', html: `<div class="intro-container"><p>ページの読み込みに失敗しました。</p></div>` };
+            mod = {
+                title: '',
+                html: `<div class="intro-container"><p>ページの読み込みに失敗しました。</p></div>`
+            };
         }
     }
 
     document.title = mod.title ? `${SITE_TITLE} - ${mod.title}` : SITE_TITLE;
     hideLoader();
-    mainContent.innerHTML = mod.html;
+
+    await setHtmlWithScripts(mainContent, mod.html);
 }
 
 function getPage() {
