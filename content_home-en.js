@@ -14,7 +14,7 @@ export default {
     <a href="https://github.com/rk0exn" target="_blank">GitHub</a>
     <a href="https://x.com/ik_llmyself" target="_blank">X (formerly Twitter)</a>
     
-    <script src="https://keepandroidopen/banner.js?lang=en&id=andriod-warn&size=mini&animation=off&hidebutton=off&link=https://keepandroidopen.org/en/></script>
+    <script src="https://keepandroidopen.org/banner.js?lang=en&id=andriod-warn&size=mini&animation=off&hidebutton=off&link=https://keepandroidopen.org/en/></script>
 </div>
 `,
 };
