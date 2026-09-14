@@ -2,8 +2,6 @@ export default {
     title: '自己紹介',
     html: /* html */`
 <div class="intro-container">
-    <div id="andriod-warn"></div>
-
     <div class="icon">👋</div>
     <p>やっほー！</p>
     <ul>
@@ -49,8 +47,6 @@ export default {
         </a>
     </div>
     <p>相互リンクなどは随時追加予定です...<br><strong>※アイコンが未設定の場合は表示されません。</strong></p>
-
-    <script src="https://keepandroidopen.org/banner.js?lang=ja&id=andriod-warn&size=mini&animation=off&hidebutton=off&link=https://keepandroidopen.org/ja/></script>
 </div>
 `,
 };

@@ -2,8 +2,6 @@ export default {
     title: 'My Profile',
     html: /* html */`
 <div class="intro-container">
-    <div id="andriod-warn"></div>
-
     <div class="icon">👋</div>
     <p>Hello!</p>
     <ul>
@@ -13,8 +11,6 @@ export default {
     <p>Nice to meet you!</p>
     <a href="https://github.com/rk0exn" target="_blank">GitHub</a>
     <a href="https://x.com/ik_llmyself" target="_blank">X (formerly Twitter)</a>
-    
-    <script src="https://keepandroidopen.org/banner.js?lang=en&id=andriod-warn&size=mini&animation=off&hidebutton=off&link=https://keepandroidopen.org/en/></script>
 </div>
 `,
 };
