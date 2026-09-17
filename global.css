@@ -298,6 +298,10 @@ a:active {
     background: var(--fill-press);
 }
 
+a.no-arrow::after {
+    content: none !important;
+}
+
 /* ───── アイコン ───── */
 .icon {
     font-size: 2em;
