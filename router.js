@@ -5,6 +5,7 @@ const PAGES        = [
     {id: DEFAULT_PAGE},
     {id: 'noiser'},
     {id: 'BinEdit'},
+    {id: 'BinEdit-en'},
     {id: 'template', jump: '/Templates/TemplateHost'},
     {id: 'bsodMaker', jump: 'https://youtu.be/dQw4w9WgXcQ'},
 ];
