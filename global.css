@@ -298,6 +298,13 @@ a:active {
     background: var(--fill-press);
 }
 
+a.no-arrow {
+    font-size: 13.5px;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+}
+
 a.no-arrow::after {
     content: none !important;
 }
