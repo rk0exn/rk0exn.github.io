@@ -47,6 +47,7 @@ export default {
         </a>
     </div>
     <p>相互リンクなどは随時追加予定です...<br><strong>※アイコンが未設定の場合は表示されません。</strong></p>
+    <a href="mailto:webmaster@rk0exn.jp?subject=%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B">メールで問い合わせる</a>
 </div>
 `,
 };

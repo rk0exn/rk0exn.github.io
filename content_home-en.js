@@ -11,6 +11,7 @@ export default {
     <p>Nice to meet you!</p>
     <a href="https://github.com/rk0exn" target="_blank">GitHub</a>
     <a href="https://x.com/ik_llmyself" target="_blank">X (formerly Twitter)</a>
+    <a href="mailto:webmaster@rk0exn.jp?subject=Inquiry">Contact us by email</a>
 </div>
 `,
 };
