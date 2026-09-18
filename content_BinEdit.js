@@ -11,7 +11,7 @@ export default {
         <li>This application is supporting Japanese and <a class="no-arrow" href="#BinEdit-en">English</a>.</li>
     </ul>
     <p>今後も機能を拡張していく予定です。リクエストも募集しています。</p>
-    <p>Latest Version: 1.0</p>
+    <p>Latest Version: 1.1</p>
     <a href="https://github.com/rk0exn/BinEdit/" target="_blank">リポジトリはこちら</a>
     <a href="https://forms.gle/GxPhtmqU4QXwWsXh8" target="_blank">機能リクエスト、バグ報告などはこちら</a>
 </div>
