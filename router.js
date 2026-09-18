@@ -1,29 +1,30 @@
 const userLang = navigator.language || navigator.userLanguage || '';
 const isJapanese = userLang.toLowerCase().startsWith('ja');
 const DEFAULT_PAGE = isJapanese ? 'home' : 'home-en';
-const PAGES        = [
-    {id: DEFAULT_PAGE},
-    {id: 'noiser'},
-    {id: 'BinEdit'},
-    {id: 'BinEdit-en'},
-    {id: 'template', jump: '/Templates/TemplateHost'},
-    {id: 'bsodMaker', jump: 'https://youtu.be/dQw4w9WgXcQ'},
+const PAGES = [
+    { id: DEFAULT_PAGE },
+    { id: 'noiser' },
+    { id: 'BinEdit' },
+    { id: 'BinEdit-en' },
+    { id: 'template', jump: '/Templates/TemplateHost' },
+    { id: 'bsodMaker', jump: 'https://youtu.be/dQw4w9WgXcQ' },
 ];
-const SITE_TITLE   = "Profile of (rk0exn / n0xa)";
+const SITE_TITLE = 'Profile of (rk0exn / n0xa)';
 
 const mainContent = document.getElementById('mainContent');
-const pageLoader  = document.getElementById('pageLoader');
-const navLinks    = document.querySelectorAll('.nav-link');
-const hamburger   = document.getElementById('navHamburger');
-const navMenu     = document.getElementById('navLinks');
+const pageLoader = document.getElementById('pageLoader');
+const navLinks = document.querySelectorAll('.nav-link');
+const hamburger = document.getElementById('navHamburger');
+const navMenu = document.getElementById('navLinks');
 
 const cache = new Map();
+let loadVersion = 0;
 
 if (!isJapanese) {
     let home = document.getElementById('home');
     document.getElementById('brandLink').href = home.href = `#${DEFAULT_PAGE}`;
     home.textContent = 'Profile';
-    home.dataset["page"] = DEFAULT_PAGE;
+    home.dataset.page = DEFAULT_PAGE;
 }
 
 function showLoader() {
@@ -40,15 +41,18 @@ function setActiveNav(page) {
     navLinks.forEach(a => a.classList.toggle('active', a.dataset.page === page));
 }
 
-async function setHtmlWithScripts(element, html) {
+async function setHtmlWithScripts(element, html, version) {
     element.innerHTML = html;
 
-    const scripts = [...element.querySelectorAll('script')];
+    let scripts = [...element.querySelectorAll('script')];
 
-    for (const oldScript of scripts) {
-        const newScript = document.createElement('script');
+    for (let oldScript of scripts) {
+        if (version !== loadVersion)
+            return;
 
-        for (const attr of oldScript.attributes)
+        let newScript = document.createElement('script');
+
+        for (let attr of oldScript.attributes)
             newScript.setAttribute(attr.name, attr.value);
 
         if (oldScript.src) {
@@ -57,6 +61,8 @@ async function setHtmlWithScripts(element, html) {
                 newScript.onerror = reject;
                 oldScript.replaceWith(newScript);
             });
+
+            if (version !== loadVersion) return;
         } else {
             newScript.textContent = oldScript.textContent;
             oldScript.replaceWith(newScript);
@@ -69,11 +75,12 @@ function getPageInfo(id) {
 }
 
 async function loadPage(page) {
+    let version = ++loadVersion;
     let pageInfo = getPageInfo(page);
 
     if (!pageInfo) {
-        location.hash = `#${DEFAULT_PAGE}`;
-        pageInfo = getPageInfo(DEFAULT_PAGE);
+        location.replace(`#${DEFAULT_PAGE}`);
+        return;
     }
 
     showLoader();
@@ -91,33 +98,38 @@ async function loadPage(page) {
     } else {
         try {
             mod = (await import(`./content_${pageInfo.id}.js`)).default;
+            if (version !== loadVersion) return;
             cache.set(pageInfo.id, mod);
         } catch (e) {
+            if (version !== loadVersion) return;
+            console.error(`Failed to load page "${pageInfo.id}":`, e);
             mod = {
                 title: SITE_TITLE,
-                html: `<div class="intro-container"><p>${isJapanese ? "ページの読み込みに失敗しました。" : "Failed to load page :("}</p></div>`
+                html: `<div class="intro-container"><p>${isJapanese ? 'ページの読み込みに失敗しました。' : 'Failed to load page :('}</p></div>`
             };
         }
     }
 
+    if (version !== loadVersion) return;
     document.title = mod.title ? `${SITE_TITLE} - ${mod.title}` : SITE_TITLE;
     hideLoader();
     try {
-        await setHtmlWithScripts(mainContent, mod.html);
+        await setHtmlWithScripts(mainContent, mod.html, version);
     } catch (e) {
-        console.error('Failed to execute page scripts: ', e);
+        if (version === loadVersion)
+            console.error('Failed to execute page scripts:', e);
     }
 }
 
 function getPage() {
-    const hash = location.hash.replace('#', '').trim();
+    let hash = location.hash.replace(/^#/, '').trim();
     return hash || DEFAULT_PAGE;
 }
 
 window.addEventListener('hashchange', () => loadPage(getPage()));
 
 hamburger.addEventListener('click', () => {
-    const isOpen = navMenu.classList.toggle('open');
+    let isOpen = navMenu.classList.toggle('open');
     hamburger.setAttribute('aria-expanded', String(isOpen));
 });
 
