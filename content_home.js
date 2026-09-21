@@ -1,5 +1,4 @@
 export default {
-    title: '自己紹介',
     html: /* html */`
 <div class="intro-container">
     <div class="icon">👋</div>

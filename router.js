@@ -9,7 +9,7 @@ const PAGES = [
     { id: 'template', jump: '/Templates/TemplateHost' },
     { id: 'bsodMaker', jump: 'https://youtu.be/dQw4w9WgXcQ' },
 ];
-const SITE_TITLE = 'Profile of (rk0exn / n0xa)';
+const SITE_TITLE = "rk0exn's homepage";
 
 const mainContent = document.getElementById('mainContent');
 const pageLoader = document.getElementById('pageLoader');
@@ -104,14 +104,13 @@ async function loadPage(page) {
             if (version !== loadVersion) return;
             console.error(`Failed to load page "${pageInfo.id}":`, e);
             mod = {
-                title: SITE_TITLE,
                 html: `<div class="intro-container"><p>${isJapanese ? 'ページの読み込みに失敗しました。' : 'Failed to load page :('}</p></div>`
             };
         }
     }
 
     if (version !== loadVersion) return;
-    document.title = mod.title ? `${SITE_TITLE} - ${mod.title}` : SITE_TITLE;
+    document.title = mod.title ? `${mod.title} - ${SITE_TITLE}` : SITE_TITLE;
     hideLoader();
     try {
         await setHtmlWithScripts(mainContent, mod.html, version);
