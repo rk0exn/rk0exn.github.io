@@ -8,10 +8,11 @@ export default {
         <li>Custom UI powered by Direct3D 11 for fast rendering</li>
         <li>Includes search, bitwise tools, and coloring features</li>
         <li>Supports multiple themes</li>
+        <li>There is also an installer version using Inno Setup 7 (v1.2 and later)</li>
         <li>このアプリケーションは<a class="no-arrow" href="#BinEdit">日本語</a>と英語をサポートしています。</li>
     </ul>
     <p>We plan to continue expanding its features in the future. Requests are welcome.</p>
-    <p>Latest Version: 1.1</p>
+    <p>Latest Version: 1.2</p>
     <a href="https://github.com/rk0exn/BinEdit/" target="_blank">Repository</a>
     <a href="https://forms.gle/GxPhtmqU4QXwWsXh8" target="_blank">Feature requests, bug reports, and more</a>
 </div>
