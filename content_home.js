@@ -41,6 +41,15 @@ export default {
         <a href="https://256server.com" target="_blank" class="profile-link">
             <img src="https://256server.com/favicon.ico" alt=""><span>256/にごろ㌠㌨🈂‼</span>
         </a>
+        <a href="https://liru.me" target="_blank" class="profile-link">
+            <img src="https://liru.me/favicon.svg" alt=""><span>liru</span>
+        </a>
+        <a href="https://soichi-portfolio.soichi1208.workers.dev" target="_blank" class="profile-link">
+            <img src="./null.png" alt=""><span>Soichi</span>
+        </a>
+        <a href="https://site.l-ituki8000.workers.dev" target="_blank" class="profile-link">
+            <img src="https://site.l-ituki8000.workers.dev/icon.png" alt=""><span>一樹</span>
+        </a>
         <a href="https://0x5.f5.si" target="_blank" class="profile-link">
             <img src="https://0x5.f5.si/favicon.ico" alt=""><span>0x5</span>
         </a>
