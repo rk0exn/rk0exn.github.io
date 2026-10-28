@@ -51,7 +51,7 @@ export default {
             <img src="https://site.l-ituki8000.workers.dev/icon.png" alt=""><span>一樹</span>
         </a>
         <a href="https://keitagame.github.io" target="_blank" class="profile-link">
-            <img src="./null.png" alt=""><span>かわせけいた</span>
+            <img src="https://keitagame.github.io/GAI.png" alt=""><span>かわせけいた</span>
         </a>
         <a href="https://0x5.f5.si" target="_blank" class="profile-link">
             <img src="https://0x5.f5.si/favicon.ico" alt=""><span>0x5</span>
