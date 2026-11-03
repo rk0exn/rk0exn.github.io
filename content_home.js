@@ -54,7 +54,7 @@ export default {
             <img src="https://keitagame.github.io/GAI.png" alt=""><span>かわせけいた</span>
         </a>
         <a href="https://amanetoki.com" target="_blank" class="profile-link">
-            <img src="https://amanetoki.com/avatar/192-044e60b2.webp" alt=""><span>雨音とき</span>
+            <img src="https://cdn.amanetoki.com/avatar/me.png" alt=""><span>雨音とき</span>
         </a>
         <a href="https://0x5.f5.si" target="_blank" class="profile-link">
             <img src="https://0x5.f5.si/favicon.ico" alt=""><span>0x5</span>
